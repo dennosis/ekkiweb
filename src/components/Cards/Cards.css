@@ -1,0 +1,119 @@
+.component{
+    border-style: none;
+    border-width: 2px;
+    border-radius: 15px;
+    border-color: rgba(200, 200, 210, 1);
+    padding:10px;
+    grid-gap: 10px;
+    display: grid;
+    grid-template-rows: min-content minmax(auto, min-content) ;
+    /*grid-template-columns: auto;*/
+}
+
+
+.titleComponent{
+    grid-column: 1;
+    grid-row: 1;
+    border-bottom: 1px solid;
+    border-color: rgba(200, 200, 210, 1);
+    display: flex;
+    align-items: flex-end;
+    padding:5px;
+ 
+    font-size:20px!important;
+    color: rgba(200, 200, 210, 1);
+    
+    font-family: Arial;
+    display:grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto min-content;
+}
+
+
+.addItemComponent{
+    padding: 5px;
+
+    display:grid;
+    grid-template-rows: min-content;
+    grid-template-columns: auto;
+    grid-column-gap: 5px;
+}
+
+
+
+
+.corpComponent{
+
+    color: rgba(200, 200, 210, 1);
+    font-size:15px!important;
+    text-align: justify;
+    font-family: Arial;
+  
+    display: grid;
+    grid-gap: 10px;
+  
+    grid-auto-rows: min-content;
+    grid-template-columns: auto auto;
+    /*height: 300px;*/
+}
+
+
+
+.addItemButton {
+  background: rgba(105,105,105,.8);
+  border: none;
+  border-width:2px;
+  
+  color: rgba(200, 200, 210, 1);
+  justify-self: end;
+  text-align: center;
+  text-decoration: none;
+  
+  border-radius: 5px;
+  width: 60px;
+  height: 100%;
+  
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.componentScrolling{
+    overflow: auto;
+}
+
+  
+.componentScrolling::-webkit-scrollbar {display:none;} 
+.componentScrolling::-moz-scrollbars-none {display:none;}
+.componentScrolling::-o-scrollbar {display:none;} 
+.componentScrolling::-google-ms-scrollbar {display:none;}
+.componentScrolling::-khtml-scrollbar {display:none;} 
+
+
+
+@media (max-width: 700px){
+
+    .corpComponent{
+
+        grid-template-columns: auto;
+    }
+}
+
+
+
+.btnSearch{
+    text-align: center;
+    border: none;
+    font-size: 1rem;
+    padding-right:10px;
+    padding-left:10px;
+    display: inherit;
+  
+    background: rgba(200, 200, 210, 1);
+  
+  
+    /*color: rgba(105,105,105,1);*/
+    outline:none;
+    max-height: 40px;
+    cursor: pointer;  
+}
+
