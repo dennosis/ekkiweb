@@ -11,7 +11,7 @@ class Cards extends Component{
     constructor(props){
         super(props)
 
-        console.log(props);
+        //console.log(props);
 
           this.state = {
             isEdit:false,
@@ -20,20 +20,20 @@ class Cards extends Component{
                 codCard:'',
                 type: '',
                 number: '',
-                codVerf: '',
-                dtExp: ''
+                codeVerf: '',
+                dtExp: '',
+                country:''
             },
             isEditCard:false
 
         }
 
-        
-        this.addItens = this.addItens.bind(this);
-        this.saveItem = this.saveItem.bind(this);
-       // this.loadCards = this.loadCards.bind(this);
-       /* this.deleteCard = this.deleteCard.bind(this);*/
-
-       this.teste = this.teste.bind(this);
+        //this.deleteCard = this.deleteCard.bind(this);
+        //this.addItens = this.addItens.bind(this);
+        //this.saveItem = this.saveItem.bind(this);
+       //this.editCard = this.editCard.bind(this);
+       //this.inputOnChange = this.inputOnChange.bind(this);
+       
     }
 
 
@@ -41,59 +41,49 @@ class Cards extends Component{
        this.props.getCards();
     }
 
-
-
-
-    addItens(){
+    addItens = () => {
      
         this.setState({
            isEdit: !this.state.isEdit
         });
 
+        this.emptyEditCard();
+        
     }
 
 
-    async saveItem(){
+
+
+     saveItem = async () => {
 
         if(this.state.isEditCard){
 
             try {
-               // const card = this.state.cardEdit;
-                
 
-                const card = {
-                    id:this.state.cardEdit.id,
-                    type: this.refs.type.value,
-                    codCard:this.state.cardEdit.codCard,
-                    number: this.refs.number.value,
-                    codeVerf: this.refs.codeVerf.value,
-                    dtExp: this.refs.dtExp.value,
-                    country:this.refs.country.value
-                
-                }
-                console.log(card);
-
-                await this.props.updateCard(card);
+                await this.props.updateCard(this.state.cardEdit);
+                await this.emptyEditCard();
                 await this.setState({
                     isEdit: false,
                     isEditCard: false
                 });
+                
             }catch(err) {
-                alert(err); // TypeError: failed to fetch
+                alert(err); 
             }
 
         }else{
             const newItem = {
-                type: this.refs.type.value,
+                type: this.state.cardEdit.type,
                 codCard:'1',
-                number: this.refs.number.value,
-                codeVerf: this.refs.codeVerf.value,
-                dtExp: this.refs.dtExp.value,
-                country:this.refs.country.value
+                number: this.state.cardEdit.number,
+                codeVerf: this.state.cardEdit.codeVerf,
+                dtExp: this.state.cardEdit.dtExp,
+                country:this.state.cardEdit.country
             }
 
             try {
                 await this.props.createCard(newItem);
+                await this.emptyEditCard();
                 await this.setState({
                     isEdit: false
                 });
@@ -105,42 +95,52 @@ class Cards extends Component{
 
 
 
-    teste(cardedit){
+     deleteCard = async (id) => {
+        await this.props.deleteCard(id);
+    }
+
+
+    editCard = (cardedit) =>{
         this.setState({
-            cardEdit: {
+            cardEdit:{
                 id:cardedit.id,
                 codCard:cardedit.codCard,
                 type: cardedit.type,
                 number: cardedit.number,
                 codeVerf: cardedit.codeVerf,
-                dtExp: cardedit.dtExp  
+                dtExp: cardedit.dtExp,
+                country: cardedit.country
             },
             isEdit: true,
             isEditCard:true
         });
+    }
 
-        console.log(cardedit);
-/*
+    inputOnChange = (value, name) =>{
+        this.setState({
+            cardEdit: {
+                ...this.state.cardEdit,
+                [name]: value
+            }
+        });
+    }
 
-
-        this.refs.type.value = this.state.cardEdit.type,
-        this.refs.number.value = this.state.cardEdit.number,
-        this.refs.codeVerf.value = this.state.cardEdit.codeVerf,
-        this.refs.dtExp.value = this.state.cardEdit.dtExp,
-        this.refs.country.value = this.state.cardEdit.country
-*/
-
-
-
-
-
-
-
-        //alert(textid);
+    emptyEditCard = () =>{
+        this.setState({
+            cardEdit:{            
+                id:'',
+                codCard:'',
+                type: '',
+                number: '',
+                codeVerf: '',
+                dtExp: '',
+                country:''
+            }
+        });
     }
 
     render(){
-
+        
         return (
             
             <div className="component box e">
@@ -148,17 +148,14 @@ class Cards extends Component{
                         <span>Cartões</span>
                         <button onClick = {this.addItens} className="btn">+</button>
                 </div>
-                
-
-
-                
+        
                 {
                     this.state.isEdit && 
 
                      <div className="addItemComponent componentScrolling">
                         <div className = "groupInput" >
                             <label className = "labelInput">Tipo Operação</label>
-                            <select ref ='type' className="inputForm" value = {this.state.cardEdit.type}>
+                            <select name ='type' value={this.state.cardEdit.type}  className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}>
                                 <option value="1">Crédito</option>
                                 <option value="2">Débito</option>
                             </select>
@@ -166,23 +163,23 @@ class Cards extends Component{
 
                         <div className = "groupInput" >
                             <label  className = "labelInput">Numero Cartão</label>
-                            <input ref = 'number' type="number"  className="inputForm" value = {this.state.cardEdit.number}/>
+                            <input name = 'number' value = {this.state.cardEdit.number} type="number"  className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
                         </div>
 
                         <div className = "groupInput" >
                             <label className = "labelInput">Data Vencimento</label>
-                            <input ref ='dtExp' type="date" className="inputForm" value = {this.state.cardEdit.dtExp}/>
+                            <input name ='dtExp' value = {this.state.cardEdit.dtExp} type="date" className="inputForm" onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
                         </div>
 
                         <div className = "groupInput" >
                             <label className = "labelInput">Cádigo Verificação</label>
-                            <input ref = 'codeVerf' type="number" className="inputForm" value = {this.state.cardEdit.codeVerf}/>
+                            <input name = 'codeVerf' value = {this.state.cardEdit.codeVerf} type="number" className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
                         </div>
 
 
                         <div className = "groupInput" >
                             <label className = "labelInput">Pais</label>
-                            <select ref = 'country' className="inputForm" >
+                            <select name = 'country' value = {this.state.cardEdit.country} className="inputForm" onChange={e => this.inputOnChange(e.target.value, e.target.name)}>
                                 <option value="1">Brasil</option>
                                 <option value="2">Argentina</option>
                             </select>
@@ -201,7 +198,7 @@ class Cards extends Component{
                 !this.state.isEdit &&
                 
                 <div className="corpComponent componentScrolling">
-                        {this.props.cards.map((card) => <Card  key={card.id} data={card} testefunction = {this.teste}/>)}
+                        {this.props.cards.map((card) => <Card  key={card.id} data={card} editfunction = {this.editCard} deletefunction = {this.deleteCard}  />)}
                 </div>
                 }
             </div>

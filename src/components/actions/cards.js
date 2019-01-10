@@ -95,11 +95,11 @@ export function deleteCard(cardId) {
         api.deleteCard(cardId).then((res)=>{
             //const cards = res.data;
             console.log(res);
-            dispatch(success());
-            dispatch(getCards())
+            dispatch(success(cardId));
+           // dispatch(getCards())
        });
     };
-    function success() { return { type: 'DELETE_CARD'} }
+    function success(id) { return { type: 'DELETE_CARD', id} }
 }
 
 export function createCard(cardObj) {

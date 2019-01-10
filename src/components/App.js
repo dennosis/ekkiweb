@@ -15,13 +15,20 @@ import Cards from './Cards/Cards'
 
 
 class App extends Component {
-  render() {
-
+  constructor(props) {
+    super(props)
     this.state = {
       name:"Alberto Santos Dumont",
       value:'1.200,00',
       foto:"https://www.escritas.org/autores/fernando-pessoa.jpg"
     }
+
+  }
+
+  
+  
+  render() {
+
 
     return (
 
@@ -30,7 +37,7 @@ class App extends Component {
         <div className="container">
             <div className="box a">
                 <div className="imgContainer">
-                  <img src={this.state.foto}/>                                               
+                  <img alt = "" src={this.state.foto}/>                                               
                 </div>
             </div>
             <div className="box b">
@@ -40,7 +47,7 @@ class App extends Component {
             </div>
             <div className="box c">
               <div className="logo">
-                <img src="https://i.imgur.com/QiAMG0g.jpg"/>
+                <img alt='' src="https://i.imgur.com/QiAMG0g.jpg"/>
               </div>
             </div>
             <div className="box d">
