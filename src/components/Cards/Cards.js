@@ -6,6 +6,10 @@ import {bindActionCreators} from 'redux'
 import  {connect}  from 'react-redux'
 import * as cardActions from '../actions/cards'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+//botoes icones
+import {faPlusSquare} from '@fortawesome/free-solid-svg-icons'
+
 
 class Cards extends Component{
     constructor(props){
@@ -17,7 +21,6 @@ class Cards extends Component{
             isEdit:false,
             cardEdit:{            
                 id:'',
-                codCard:'',
                 type: '',
                 number: '',
                 codeVerf: '',
@@ -74,7 +77,6 @@ class Cards extends Component{
         }else{
             const newItem = {
                 type: this.state.cardEdit.type,
-                codCard:'1',
                 number: this.state.cardEdit.number,
                 codeVerf: this.state.cardEdit.codeVerf,
                 dtExp: this.state.cardEdit.dtExp,
@@ -104,7 +106,6 @@ class Cards extends Component{
         this.setState({
             cardEdit:{
                 id:cardedit.id,
-                codCard:cardedit.codCard,
                 type: cardedit.type,
                 number: cardedit.number,
                 codeVerf: cardedit.codeVerf,
@@ -129,7 +130,6 @@ class Cards extends Component{
         this.setState({
             cardEdit:{            
                 id:'',
-                codCard:'',
                 type: '',
                 number: '',
                 codeVerf: '',
@@ -146,7 +146,8 @@ class Cards extends Component{
             <div className="component box e">
                 <div className="titleComponent">
                         <span>Cartões</span>
-                        <button onClick = {this.addItens} className="btn">+</button>
+                        <FontAwesomeIcon onClick= {this.addItens} icon={faPlusSquare} size="2x"/>
+                        
                 </div>
         
                 {
@@ -189,6 +190,7 @@ class Cards extends Component{
 
                         <div className = "groupButton">
                             <button type = 'button' onClick = {this.saveItem} className="btn">Salvar</button>
+                            <button type = 'button' onClick = {this.addItens} className="btn">Cancelar</button>
                         </div>
 
                     </div>
@@ -209,7 +211,7 @@ class Cards extends Component{
 
 
 
-
+//<button onClick = {this.addItens} className="btn">+</button>
 
 const mapStateToProps = state => ({
     cards: state.cards,

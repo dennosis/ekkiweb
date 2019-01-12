@@ -9,7 +9,11 @@ import {
 
 import Contacts from './Contacts/Contacts'
 import Cards from './Cards/Cards'
-
+/*
+//botoes icones
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faCreditCard} from '@fortawesome/free-solid-svg-icons'
+*/
 
 
 
@@ -73,3 +77,4 @@ class App extends Component {
 }
 
 export default App;
+

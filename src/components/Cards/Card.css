@@ -48,12 +48,18 @@
     /*border-width: 2px;*/
     
     border-color: rgba(200, 200, 210, 1);  
-    width:50px;
+    width:60px;
     height:50px;
   }
 
  
   .imgContainerCard img{
+    max-width:100%;
+    max-height:100%;
+    margin: auto;
+  }
+
+  .imgContainerCard svg{
     max-width:100%;
     max-height:100%;
     margin: auto;
@@ -80,30 +86,17 @@
     grid-template-rows: auto;
     grid-auto-columns: auto;
     grid-auto-flow: column;
-    grid-gap: 10px;
+    grid-gap: 30px;
 }
 
-.btnCard{
-    text-align: center;
-    border: none;
-    font-size: 1rem;
-    border-radius: 5px;
-    /*line-height: 1.5;*/
-    padding-right:10px;
-    padding-left:10px;
-    display: inherit;
-  
-    background: rgba(105,105,105,1);
-  
-  
-    color: rgba(200, 200, 210, 1);
-  
-    cursor: pointer; 
-    outline: none; 
-
+.fa-pencil-alt, .fa-trash-alt{
+cursor: pointer; 
 }
 
-.btnCard:hover{
-    background: rgba(105,105,105,.8);
-  
-  }
+.fa-pencil-alt:hover path{
+    fill: orange; 
+}
+
+.fa-trash-alt:hover path{
+    fill: red; 
+}

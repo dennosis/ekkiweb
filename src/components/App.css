@@ -290,11 +290,19 @@
 }
 
 input.inputForm, select.inputForm{
+
+
   padding: 5px;
-  border: solid 2px ;
-  border-color: rgba(200, 200, 210, 1);  
+  border: 0px ;
+  border-bottom: solid 1px ;
+  border-color: grey;  
   outline:none;
-  border-radius: 5px;
+  border-radius: 0px;
+}
+
+.inputForm:hover{
+  background: rgba(200, 200, 210, .1);
+  
 }
 
 
@@ -355,3 +363,11 @@ select.inputForm option{
 
 
 
+
+/* icone adicionar*/
+.fa-plus-square{
+  cursor: pointer;
+}
+.fa-plus-square:hover path{
+  fill: rgba(105,105,105,.8);
+}
