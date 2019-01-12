@@ -2,55 +2,17 @@ import React, { Component } from 'react'
 import './Contacts.css';
 import Contact from './Contact'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+//botoes icones
+import {faPlusSquare} from '@fortawesome/free-solid-svg-icons'
+
 class Contacts extends Component{
 
     constructor(props){
         super(props)
           this.state = {
             isSearch:false,
-            contacts:[
-                {name:"Alberto Santos Dumont",
-                cpf:"1545211515125",
-                conta:"18188181",
-                img:"https://www.escritas.org/autores/fernando-pessoa.jpg"},
-
-                {name:"Alberto Santos Dumont",
-                cpf:"1545211515125",
-                conta:"18188181",
-                img:"https://www.escritas.org/autores/fernando-pessoa.jpg"},
-
-                {name:"Alberto Santos Dumont",
-                cpf:"1545211515125",
-                conta:"18188181",
-                img:"https://www.escritas.org/autores/fernando-pessoa.jpg"},
-                
-                {name:"Alberto Santos Dumont",
-                cpf:"1545211515125",
-                conta:"18188181",
-                img:"https://www.escritas.org/autores/fernando-pessoa.jpg"},
-                
-                {name:"Alberto Santos Dumont",
-                cpf:"1545211515125",
-                conta:"18188181",
-                img:"https://www.escritas.org/autores/fernando-pessoa.jpg"},
-
-                {name:"Alberto Santos Dumont",
-                cpf:"1545211515125",
-                conta:"18188181",
-                img:"https://www.escritas.org/autores/fernando-pessoa.jpg"},
-                {name:"Alberto Santos Dumont",
-                cpf:"1545211515125",
-                conta:"18188181",
-                img:"https://www.escritas.org/autores/fernando-pessoa.jpg"},
-                {name:"Alberto Santos Dumont",
-                cpf:"1545211515125",
-                conta:"18188181",
-                img:"https://www.escritas.org/autores/fernando-pessoa.jpg"},
-                {name:"Alberto Santos Dumont",
-                cpf:"1545211515125",
-                conta:"18188181",
-                img:"https://www.escritas.org/autores/fernando-pessoa.jpg"}
-            ]
+            
 
         }
 
@@ -84,7 +46,8 @@ class Contacts extends Component{
             <div className="component box e">
                 <div className="titleComponent">
                         <span>Contatos</span>
-                        <button onClick = {this.searchItens} className="btn">+</button>
+                        <FontAwesomeIcon onClick= {this.searchItens} icon={faPlusSquare} size="2x"/>
+
                 </div>
                 
                 {this.state.isSearch && 

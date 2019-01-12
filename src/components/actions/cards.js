@@ -90,9 +90,9 @@ export function getCards() {
     function success(cards) { return { type: 'GET_CARDS', cards } }
 }
 
-export function deleteCard(cardId) {
+export function deleteCard(userId, cardId) {
     return dispatch => {
-        api.deleteCard(cardId).then((res)=>{
+        api.deleteCard(userId, cardId).then((res)=>{
             //const cards = res.data;
             console.log(res);
             dispatch(success(cardId));
@@ -102,9 +102,9 @@ export function deleteCard(cardId) {
     function success(id) { return { type: 'DELETE_CARD', id} }
 }
 
-export function createCard(cardObj) {
+export function createCard(userId,cardObj) {
     return dispatch => {
-        api.createCard(cardObj).then((res)=>{
+        api.createCard(userId, cardObj).then((res)=>{
             const card = res.data;
             console.log(res);
             dispatch(success(card));

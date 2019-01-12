@@ -62,11 +62,8 @@ class Card extends Component{
 
         return (
             <div className = "card">
-            
-                <div className="imgContainerCard">
-                        <FontAwesomeIcon icon={cardcreditico} size="5x"/>
-                                                                        
-                </div>
+                <FontAwesomeIcon icon={cardcreditico} size="3x"/>
+     
                 <div className="card-corp">
                     <span className="card-number txtScrolling">{this.props.data.number}</span> 
                     <span className="card-tp txtScrolling">{typeDesc}</span> 
@@ -89,4 +86,10 @@ export default Card;
 
 /*
                         <button onClick= {this.editCard} type = 'button' className = 'btnCard'>editar</button>  
-                        <button onClick={this.deleteCard} type = 'button' className = 'btnCard'>excluir</button> */
+                        <button onClick={this.deleteCard} type = 'button' className = 'btnCard'>excluir</button> 
+
+                        <div className="imgContainerCard">
+                        <FontAwesomeIcon icon={cardcreditico} size="3x"/>
+                                                                        
+                </div>
+                */

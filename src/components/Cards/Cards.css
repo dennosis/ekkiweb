@@ -53,8 +53,8 @@
     grid-gap: 10px;
   
     grid-auto-rows: min-content;
-    /*grid-template-columns: auto auto;*/
-    grid-template-columns: auto;
+    grid-template-columns: auto auto;
+    /*grid-template-columns: auto;*/
 }
 
 

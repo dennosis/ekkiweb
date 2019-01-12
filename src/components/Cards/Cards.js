@@ -4,7 +4,7 @@ import Card from './Card'
 
 import {bindActionCreators} from 'redux'
 import  {connect}  from 'react-redux'
-import * as cardActions from '../actions/cards'
+import * as cardActions from '../actions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //botoes icones
@@ -14,9 +14,7 @@ import {faPlusSquare} from '@fortawesome/free-solid-svg-icons'
 class Cards extends Component{
     constructor(props){
         super(props)
-
-        //console.log(props);
-
+        console.log(props)
           this.state = {
             isEdit:false,
             cardEdit:{            
@@ -30,18 +28,13 @@ class Cards extends Component{
             isEditCard:false
 
         }
-
-        //this.deleteCard = this.deleteCard.bind(this);
-        //this.addItens = this.addItens.bind(this);
-        //this.saveItem = this.saveItem.bind(this);
-       //this.editCard = this.editCard.bind(this);
-       //this.inputOnChange = this.inputOnChange.bind(this);
        
     }
 
 
     componentDidMount(){
        this.props.getCards();
+      // this.props.login("dennisaguiar10@gmail.com","123456");
     }
 
     addItens = () => {
@@ -84,7 +77,7 @@ class Cards extends Component{
             }
 
             try {
-                await this.props.createCard(newItem);
+                await this.props.createCard(this.props.userId, newItem);
                 await this.emptyEditCard();
                 await this.setState({
                     isEdit: false
@@ -98,7 +91,7 @@ class Cards extends Component{
 
 
      deleteCard = async (id) => {
-        await this.props.deleteCard(id);
+        await this.props.deleteCard(this.props.userId,id);
     }
 
 
@@ -202,6 +195,7 @@ class Cards extends Component{
                 <div className="corpComponent componentScrolling">
                         {this.props.cards.map((card) => <Card  key={card.id} data={card} editfunction = {this.editCard} deletefunction = {this.deleteCard}  />)}
                 </div>
+                
                 }
             </div>
                 
@@ -214,6 +208,7 @@ class Cards extends Component{
 //<button onClick = {this.addItens} className="btn">+</button>
 
 const mapStateToProps = state => ({
+    userId: state.user.id,
     cards: state.cards,
 });
   

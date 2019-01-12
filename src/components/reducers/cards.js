@@ -10,8 +10,10 @@ export default function cards(state = [], action) {
       
       case 'DELETE_CARD':
       
-        const qfilterdelete = state.filter(item => item.id !== action.id);
-        return qfilterdelete;
+        const qcards = state.cards.filter(item => item.id !== action.id);
+        
+        
+        return {...state,cards: qcards};
             
 
       case 'CREATE_CARD':
