@@ -50,14 +50,6 @@
     {
       "idUser": 7,
       "id": 19
-    },
-    {
-      "idUser": 6,
-      "id": 20
-    },
-    {
-      "idUser": 5,
-      "id": 21
     }
   ],
   "user": [
@@ -69,7 +61,7 @@
       "password": "123456",
       "cpf": "1545211515125",
       "account": "14891",
-      "isActive": true,
+      "isActive": "true",
       "valueAccount": 12000,
       "img": "https://www.escritas.org/autores/fernando-pessoa.jpg"
     },

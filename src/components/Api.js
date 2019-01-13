@@ -29,6 +29,8 @@ export const getUserByName = (idUser, fname, lname) => {
   return api.get('user?firstName='+fname+""+lname)
 }
 
+export const updateUser = (idUser, item) => api.put('user/'+item.id, item)
+
 
 const apis = {
     loadCards,
@@ -44,7 +46,8 @@ const apis = {
     getUserByAccount,
     getUserByCpf,
     getContactById,
-    addContact
+    addContact,
+    updateUser
 }
 
 export default apis

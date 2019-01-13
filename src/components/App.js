@@ -11,7 +11,7 @@ import {
 
 import Contacts from './Contacts/Contacts'
 import Cards from './Cards/Cards'
-
+import User from './User/User'
 //botoes icones
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faMoneyBillAlt, faUsers, faCreditCard} from '@fortawesome/free-solid-svg-icons'
@@ -40,9 +40,10 @@ class App extends Component {
         <Router>
         <div className="container">
             <div className="box a">
-                <div className="imgContainer">
+                <NavLink  exact to="/user" className="menu-item imgContainer" activeClassName = "menu-item-active">
+                
                   <img alt = "" src={this.props.user.img}/>                                               
-                </div>
+                </NavLink>
             </div>
             <div className="box b">
                 <span className="txtinfo  txtScrolling">{this.props.user.firstName + ' '+this.props.user.lastName }</span>
@@ -57,7 +58,7 @@ class App extends Component {
 
             <div className="box d">
 
-                <NavLink  exact to="/" className="menu-item" activeClassName = "menu-item-active">
+                <NavLink  exact to="/transactions" className="menu-item" activeClassName = "menu-item-active">
                   <FontAwesomeIcon icon={faMoneyBillAlt} size="2x"/>
                 </NavLink>
                 
@@ -70,7 +71,8 @@ class App extends Component {
                     <FontAwesomeIcon icon={faCreditCard} size="2x"/>
                 </NavLink>
             </div>
-
+            
+            <Route exact path='/user' component={User}/>
             <Route exact path='/contacts' component={Contacts}/>
             <Route exact path='/cards' component={Cards}/>
 

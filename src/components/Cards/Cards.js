@@ -14,7 +14,7 @@ import {faPlusSquare} from '@fortawesome/free-solid-svg-icons'
 class Cards extends Component{
     constructor(props){
         super(props)
-        console.log(props)
+        
           this.state = {
             isEdit:false,
             cardEdit:{            
