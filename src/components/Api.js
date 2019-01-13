@@ -4,15 +4,30 @@ const api = axios.create({
     baseURL: 'http://localhost:3001'
 })
 
-
 export const loadCards = () => api.get('cards')
 export const saveCard = (userId, newItem) => api.post('user/'+userId+'/cards', newItem)
-export const deleteCard = (userId, id)=> api.delete('cards'+id)
+export const deleteCard = (userId, id)=> api.delete('cards/'+id)
 export const createCard = (userId, item) => api.post('cards', item)
 export const updateCard = (item) => api.put('cards/'+item.id, item)
-//export const getConcats = (item) => api.put('cards/'+item.id, item)
 
-export const login = (email,pass ) => api.get('user?email='+email+'&&password='+pass+"")
+export const login = (email,pass) => api.get('user?email='+email+'&&password='+pass+"")
+
+export const getContacts = (iduser) => api.get('contacts')
+
+export const getUserById = (id) => api.get('user/'+id)
+export const deleteContact = (idUser, idContact) => api.delete('contacts/'+idContact)
+
+export const getUserByAccount = (idUser, account) => api.get('user?account='+account)
+export const getUserByCpf = (idUser, cpf) => api.get('user?cpf='+cpf)
+export const getContactById = (idUser, id) => api.get('contacts?idUser='+id)
+export const addContact = (userId, item) => api.post('contacts', item)
+
+export const getUserByName = (idUser, fname, lname) => {
+  if(lname.length > 0){
+    lname = '&&lastName='+lname;
+  }
+  return api.get('user?firstName='+fname+""+lname)
+}
 
 
 const apis = {
@@ -21,7 +36,15 @@ const apis = {
     deleteCard,
     createCard,
     updateCard,
-    login
+    login,
+    getContacts,
+    getUserById,
+    deleteContact,
+    getUserByName,
+    getUserByAccount,
+    getUserByCpf,
+    getContactById,
+    addContact
 }
 
 export default apis

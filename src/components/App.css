@@ -364,9 +364,24 @@ select.inputForm option{
 }
 
 /* icone adicionar*/
-.fa-plus-square{
-  cursor: pointer;
+
+
+
+.fa-pencil-alt, .fa-trash-alt,.fa-plus-square, .fa-plus-circle{
+  cursor: pointer; 
+  }
+  
+  .fa-pencil-alt:hover path{
+      fill: orange; 
+  }
+  
+  .fa-trash-alt:hover path{
+      fill: red; 
+  }
+  .fa-trash-alt:hover path{
+    fill: red; 
 }
-.fa-plus-square:hover path{
-  fill: rgba(105,105,105,.8);
+
+.fa-plus-circle:hover path{
+  fill: greenyellow;
 }

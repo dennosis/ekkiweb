@@ -1,9 +1,12 @@
 import { combineReducers } from 'redux';
 
-import cards from './cards';
 import user from './user';
+import cards from './cards';
+import contacts from './contacts';
 
 export default combineReducers({
+  user, 
   cards,
-  user
+  contacts,
+
 });

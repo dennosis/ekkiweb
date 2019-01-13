@@ -4,8 +4,8 @@ export default function user(state = [], action) {
 
       case 'LOGIN_SUCCESS':
             const quser = action.user
-          return quser;
-    
+        
+          return quser 
         
       default:
         return state;

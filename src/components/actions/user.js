@@ -1,7 +1,5 @@
 import api from '../Api'
 
-
-
 export function login(email, password) {
     return dispatch => {
         api.login(email, password)
