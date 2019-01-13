@@ -19,26 +19,25 @@
   "cards": [
     {
       "id": 25,
-      "type": "",
+      "type": "1",
       "number": "43243255",
       "codeVerf": "3423432",
       "dtExp": "",
       "country": "2"
     },
     {
+      "id": 28,
       "type": "",
-      "number": "",
+      "number": "2312132313",
       "codeVerf": "",
       "dtExp": "",
-      "country": "",
-      "id": 28
+      "country": ""
     },
     {
       "type": "",
       "number": "452435534",
       "codeVerf": "3453453453",
       "dtExp": "43545-05-04",
-      "country": "",
       "id": 29
     }
   ],
@@ -136,6 +135,28 @@
       "isActive": true,
       "valueAccount": 12000,
       "img": "https://www.escritas.org/autores/fernando-pessoa.jpg"
+    }
+  ],
+  "transactions": [
+    {
+      "idUserDest": "2",
+      "operation": "",
+      "value": "17888",
+      "valuecard": "",
+      "idcard": "28",
+      "date": "",
+      "isConfirmed": false,
+      "id": 1
+    },
+    {
+      "idUserDest": "2",
+      "operation": "",
+      "value": "1818748",
+      "valuecard": "",
+      "idcard": "28",
+      "date": "",
+      "isConfirmed": false,
+      "id": 2
     }
   ]
 }

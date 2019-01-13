@@ -112,7 +112,7 @@ class User extends Component{
 
                         <div className = "groupInput" >
                             <label  className = "labelInput">CPF</label>
-                            <input name = 'cpf' value = { this.state.cpf} type="text"  className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
+                            <input name = 'cpf' value = { this.state.cpf} type="number"  className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
                         </div>
 
 

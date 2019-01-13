@@ -12,6 +12,8 @@ import {
 import Contacts from './Contacts/Contacts'
 import Cards from './Cards/Cards'
 import User from './User/User'
+import Transactions from './Transactions/Transactions'
+
 //botoes icones
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faMoneyBillAlt, faUsers, faCreditCard} from '@fortawesome/free-solid-svg-icons'
@@ -71,7 +73,7 @@ class App extends Component {
                     <FontAwesomeIcon icon={faCreditCard} size="2x"/>
                 </NavLink>
             </div>
-            
+            <Route exact path='/transactions' component={Transactions}/>
             <Route exact path='/user' component={User}/>
             <Route exact path='/contacts' component={Contacts}/>
             <Route exact path='/cards' component={Cards}/>

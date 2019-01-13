@@ -31,6 +31,7 @@ export const getUserByName = (idUser, fname, lname) => {
 
 export const updateUser = (idUser, item) => api.put('user/'+item.id, item)
 
+export const createTransaction = (userId, item) => api.post('transactions', item)
 
 const apis = {
     loadCards,
@@ -47,7 +48,8 @@ const apis = {
     getUserByCpf,
     getContactById,
     addContact,
-    updateUser
+    updateUser,
+    createTransaction
 }
 
 export default apis

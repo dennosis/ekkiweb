@@ -382,9 +382,7 @@ select.inputForm option{
   .fa-trash-alt:hover path{
       fill: red; 
   }
-  .fa-trash-alt:hover path{
-    fill: red; 
-}
+
 
 .fa-plus-circle:hover path{
   fill: greenyellow;
