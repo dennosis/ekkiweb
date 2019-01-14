@@ -1,5 +1,4 @@
 import api from '../Api'
-import { faTruckMonster } from '@fortawesome/free-solid-svg-icons';
 
 export function getContacts(idUser) {
     return dispatch => {

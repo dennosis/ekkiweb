@@ -12,6 +12,7 @@ import * as transactionsActions from '../actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //botoes icones
 import {faPlusSquare} from '@fortawesome/free-solid-svg-icons'
+import Transaction from './Transaction';
 
 
 
@@ -20,12 +21,12 @@ class Transactions extends Component{
 
     constructor(props){
         super(props)
-
+        
         
           this.state = {
             isAddTransaction:false,
             transactionData:{
-                idUserOrig:props.userId,
+                idUserOrig:this.props.userId,
                 idUserDest:'',
                 operation:'',
                 value:'',
@@ -40,16 +41,21 @@ class Transactions extends Component{
 
 
     componentDidMount(){
-        this.props.getContacts();
-        this.props.getCards();
-        console.log(this.props)
+        this.props.getContacts(this.props.userId);
+        this.props.getCards(this.props.userId);
+        this.props.getTransactions(this.props.userId);
+        //console.log(this.props)
      }
 
 
 
-    createTransaction=()=>{
+    createTransaction= async()=>{
         const tmpdata = this.state.transactionData;
-        this.props.createTransaction(this.props.userId, tmpdata)
+        tmpdata.date = new Date();
+        await this.props.createTransaction(this.props.userId, tmpdata)
+        await this.setState({
+            isAddTransaction: false
+        })
     }
 
     addItens=()=>{
@@ -136,13 +142,13 @@ class Transactions extends Component{
                     </div>
                 }
 
-                {
-                <div className="corpComponent componentScrolling">
+                
+                <div className="corpComponent componentScrolling corpComponentTransactions">
                         {
-                          // this.props.contacts.map((contact, index) => <Contact  key={index} data={contact} deletefunction = {this.deleteContact} addfunction = {this.addContact}/>) 
+                           this.props.transactions.map((transaction, index) => <Transaction  key={index} data={transaction} />) 
                         }
                 </div>
-                }
+                
 
             </div>
                 

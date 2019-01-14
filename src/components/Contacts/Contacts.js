@@ -36,10 +36,10 @@ class Contacts extends Component{
 
 
     componentDidMount(){
-        this.props.getContacts();
+        this.props.getContacts(this.props.userId);
      }
 
-
+/*
     getUserbId=(id)=>{
 
         this.setState({
@@ -48,6 +48,7 @@ class Contacts extends Component{
 
      
     }
+    */
 
 
     searchItens=()=>{
@@ -57,7 +58,7 @@ class Contacts extends Component{
         })
 
         if(this.state.isSearch){
-            this.props.getContacts();
+            this.props.getContacts(this.props.userId);
         }
     }
 
@@ -65,11 +66,10 @@ class Contacts extends Component{
 
     deleteContact = async (idContatct) => {
         await this.props.deleteContact(this.props.userId, idContatct);
-        //console.log(idContatct)
     }
 
     addContact = async (idContact) => {
-        const cantact = {idUser:idContact }
+        const cantact = {idUser:idContact, idUserOrig: this.props.userId }
         await this.props.addContact(this.props.userId, cantact);
         //console.log(idContatct)
     }

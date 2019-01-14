@@ -23,7 +23,9 @@ class Cards extends Component{
                 number: '',
                 codeVerf: '',
                 dtExp: '',
-                country:''
+                country:'',
+                idUserOrig: this.props.userId
+
             },
             isEditCard:false
 
@@ -33,8 +35,8 @@ class Cards extends Component{
 
 
     componentDidMount(){
-       this.props.getCards();
-      // this.props.login("dennisaguiar10@gmail.com","123456");
+       this.props.getCards(this.props.userId);
+       console.log(this.props.userId)
     }
 
     addItens = () => {
@@ -69,6 +71,7 @@ class Cards extends Component{
 
         }else{
             const newItem = {
+                idUserOrig: this.props.userId,
                 type: this.state.cardEdit.type,
                 number: this.state.cardEdit.number,
                 codeVerf: this.state.cardEdit.codeVerf,
@@ -103,7 +106,9 @@ class Cards extends Component{
                 number: cardedit.number,
                 codeVerf: cardedit.codeVerf,
                 dtExp: cardedit.dtExp,
-                country: cardedit.country
+                country: cardedit.country,
+                idUserOrig: this.props.userId,
+
             },
             isEdit: true,
             isEditCard:true
@@ -128,6 +133,7 @@ class Cards extends Component{
                 codeVerf: '',
                 dtExp: '',
                 country:''
+
             }
         });
     }

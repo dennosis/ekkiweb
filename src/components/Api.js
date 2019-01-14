@@ -4,16 +4,14 @@ const api = axios.create({
     baseURL: 'http://localhost:3001'
 })
 
-export const loadCards = () => api.get('cards')
-export const saveCard = (userId, newItem) => api.post('user/'+userId+'/cards', newItem)
+
+export const getCards = (userId) => api.get('cards?idUserOrig='+userId)
 export const deleteCard = (userId, id)=> api.delete('cards/'+id)
 export const createCard = (userId, item) => api.post('cards', item)
 export const updateCard = (item) => api.put('cards/'+item.id, item)
+export const login = (email,pass) => api.get('user?email='+email+'&&password='+pass+'')
 
-export const login = (email,pass) => api.get('user?email='+email+'&&password='+pass+"")
-
-export const getContacts = (iduser) => api.get('contacts')
-
+export const getContacts = (iduser) => api.get('contacts?idUserOrig='+iduser)
 export const getUserById = (id) => api.get('user/'+id)
 export const deleteContact = (idUser, idContact) => api.delete('contacts/'+idContact)
 
@@ -32,10 +30,26 @@ export const getUserByName = (idUser, fname, lname) => {
 export const updateUser = (idUser, item) => api.put('user/'+item.id, item)
 
 export const createTransaction = (userId, item) => api.post('transactions', item)
+export const createUser = (item) => api.post('user', item)
+
+export const getTransactions = (iduser, tptrans) => {
+  var filteradd
+  if(tptrans === 1){
+      filteradd = "idUserOrig="+iduser
+  }else{
+
+      filteradd = "idUserDest="+iduser
+
+  }
+
+  return api.get('transactions?'+filteradd)
+
+}
+
+
 
 const apis = {
-    loadCards,
-    saveCard,
+    getCards,
     deleteCard,
     createCard,
     updateCard,
@@ -49,7 +63,9 @@ const apis = {
     getContactById,
     addContact,
     updateUser,
-    createTransaction
+    createTransaction,
+    getTransactions,
+    createUser
 }
 
 export default apis

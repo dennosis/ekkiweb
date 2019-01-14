@@ -16,11 +16,14 @@ export default function transactions(state = [], action) {
         //return {...state,cards: qcards};
             */
 
-      case 'CREATE_TRANSACTION':
+        case 'CREATE_TRANSACTION':
           const transaction = action.transaction
          
-          return  [transaction, ...state]
+            return  [transaction, ...state]
 
+        case 'GET_TRANSACTIONS':
+            return action.transactions;
+    
         
       default:
         return state;

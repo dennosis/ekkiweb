@@ -70,7 +70,6 @@ class Card extends Component{
                     <div className = 'groupButtonCard'>
                         <FontAwesomeIcon onClick= {this.editCard} icon={faPencilAlt} size="1x"/>
                         <FontAwesomeIcon onClick={this.deleteCard} icon={faTrashAlt} size="1x"/>
-
                     </div>  
                 </div>
             </div>

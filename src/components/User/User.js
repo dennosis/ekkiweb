@@ -8,7 +8,7 @@ import * as cardActions from '../actions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //botoes icones
-import {faUpload} from '@fortawesome/free-solid-svg-icons'
+import {faUpload, faUser} from '@fortawesome/free-solid-svg-icons'
 
 
 class User extends Component{
@@ -17,19 +17,7 @@ class User extends Component{
 
 
         console.log(props)
-        /*
-          this.state = {
-            id: '',
-            firstName: "",
-            lastName: "",
-            email: "",
-            cpf: "",
-            account: "",
-            isActive:"" ,
-            valueAccount: "",
-            img: "",
-            isSalve:false
-        } */
+    
         
 
 
@@ -48,21 +36,7 @@ class User extends Component{
         } 
     
     }
-/*
-    componentDidMount(){
-        this.setState = {
-            id: this.props.user.id,
-            firstName: this.props.user.firstName,
-            lastName: this.props.user.lastName,
-            email: this.props.user.email,
-            cpf: this.props.user.cpf,
-            account: this.props.user.account,
-            isActive:this.props.user.isActive,
-            valueAccount: this.props.user.valueAccount,
-            img: this.props.user.img
-        }
-    }
-    */
+
 
     saveUser = ()=>{
       const upuser = {
@@ -151,7 +125,9 @@ class User extends Component{
                         <div className = "groupInput" >
                             <div className = "inputForm groupUpload" >
                                 <div className="foto">
-                                        <img className = "fotoImg" src={ this.state.img}/>                                    
+                                        {this.state.img > '' && <img alt = "" className = "fotoImg" src={this.state.img}/> }
+                                        {this.state.img === '' &&  <FontAwesomeIcon icon={faUser} size="5x"/>}
+                                                                        
                                 </div>
                                 
                                 <input className = "inputFormUpload" id="file-upload" type="file"/>
@@ -193,56 +169,3 @@ const mapDispatchToProps = dispatch => bindActionCreators(cardActions, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(User);
 
-
-/*
-<div className = "groupInput" >
-<label className = "labelInput">Tipo Operação</label>
-<select name ='type' value={this.state.cardEdit.type}  className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}>
-    <option value="1">Crédito</option>
-    <option value="2">Débito</option>
-</select>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        <div className = "groupInput" >
-                            <label className = "labelInput">Data Vencimento</label>
-                            <input name ='dtExp' value = {this.state.cardEdit.dtExp} type="date" className="inputForm" onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
-                        </div>
-
-                        <div className = "groupInput" >
-                            <label className = "labelInput">Cádigo Verificação</label>
-                            <input name = 'codeVerf' value = {this.state.cardEdit.codeVerf} type="number" className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
-                        </div>
-
-
-                        <div className = "groupInput" >
-                            <label className = "labelInput">Pais</label>
-                            <select name = 'country' value = {this.state.cardEdit.country} className="inputForm" onChange={e => this.inputOnChange(e.target.value, e.target.name)}>
-                                <option value="1">Brasil</option>
-                                <option value="2">Argentina</option>
-                            </select>
-                        </div>
-*/

@@ -1,0 +1,48 @@
+
+
+.login{
+    grid-column: 2;
+    grid-row: 2;
+    
+    max-width: 400px;
+    min-width: 300px;
+    margin: auto;
+
+    border-style: none;
+    border-width: 2px;
+    border-radius: 15px;
+    border-color: rgba(200, 200, 210, 1);
+    padding:10px;
+    grid-gap: 10px;
+    display: grid;
+    grid-template-rows: min-content min-content;
+}
+
+.corpLogin{
+ 
+    color: rgba(200, 200, 210, 1);
+    font-size:15px!important;
+    text-align: justify;
+    font-family: Arial;
+  
+    display: grid;
+    grid-gap: 10px;
+  
+    grid-auto-rows: min-content;
+    grid-template-columns: auto;
+
+
+}
+
+
+.inputForm{
+    font-size: 1.0rem;
+    display: inherit;
+    color: rgba(200, 200, 210, 1);
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box; 
+    background: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  

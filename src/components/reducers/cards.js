@@ -4,23 +4,18 @@ export default function cards(state = [], action) {
     
 
       case 'GET_CARDS':
-            const cards = action.cards
-            //console.log(cards)        
-          return cards;
+                   
+          return action.cards;
       
       case 'DELETE_CARD':
       
-        const qcards = state.filter(item => item.id !== action.id);
-       // console.log(state)
-        return qcards
+        return state.filter(item => item.id !== action.id);
         
-        //return {...state,cards: qcards};
             
 
       case 'CREATE_CARD':
           const card = action.card
-          const qstate = [{...card}, ...state]
-          return qstate
+          return [card, ...state]
 
       case 'UPDATE_CARD':
         const cardup = action.card

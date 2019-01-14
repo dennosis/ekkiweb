@@ -9,7 +9,16 @@ export default function user(state = [], action) {
         case 'SAVE_SUCCESS':
             const saveuser = action.user
             return saveuser 
+
+        case 'LOGOUT_SUCCESS':
         
+            return action.user
+        
+        case 'REGISTER_SUCCESS':
+        
+            return action.user
+
+
       default:
         return state;
     }

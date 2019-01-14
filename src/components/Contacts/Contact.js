@@ -4,7 +4,7 @@ import './Contact.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 //botoes icones
-import { faPlusCircle, faTrashAlt} from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle, faTrashAlt, faUser} from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -13,8 +13,7 @@ class Contact extends Component{
     constructor(props){
         super(props)
       
-        //this.state = props.data;
-//console.log(props)
+
         
         this.state = {
             name:props.data.name,
@@ -42,7 +41,8 @@ class Contact extends Component{
         return (
             <div className = "contact">
                 <div className="imgContainer2">
-                        <img alt = '' src={this.props.data.img} />                                                 
+                        {this.props.data.img > '' && <img alt = "" src={this.props.data.img}/> }
+                        {this.props.data.img === '' &&  <FontAwesomeIcon icon={faUser} size="2x"/>}                                                
                 </div>
                 <div className="contact-corp">
                     <span className="contact-name txtScrolling">{this.props.data.firstName +" "+ this.props.data.lastName}</span>     
@@ -64,3 +64,4 @@ class Contact extends Component{
 
 
 export default Contact
+
