@@ -1,12 +1,37 @@
 import api from '../Api'
 
 export function createTransaction(userId,item) {
-    return dispatch => {
-        api.createTransaction(userId, item).then((res)=>{
-            const transac = res.data;
+    return async dispatch => {
+       await api.createTransaction(userId, item).then(async(res)=>{
+
+            var  transac = await editObj(res.data.id, res.data.idUserDest, 1, res.data.value, res.data.idcard, res.data.valuecard, res.data.date, res.data.isConfirmed)
+                            
             dispatch(success(transac));
        });
     };
+
+
+    function editObj(id, idUser, typetransation, value, idcard, valuecard, date, isConfirmed){
+        return api.getUserById(idUser)
+            .then(resp => {
+                return {
+                    id,
+                    idUser,
+                    nameUser: resp.data.firstName,
+                    account: resp.data.account,
+                    img: resp.data.img,
+                    typetransation,
+                    value,
+                    idcard,
+                    valuecard,
+                    date,
+                    isConfirmed
+                }   
+            })
+    
+    }
+
+
     function success(transaction) { return { type: 'CREATE_TRANSACTION', transaction}}
 }
 
@@ -81,12 +106,8 @@ export  function  getTransactions(idUser) {
 
 
 
-
-
     function success(transactions) { return { type: 'GET_TRANSACTIONS', transactions } }
 }
-
-
 
 
 

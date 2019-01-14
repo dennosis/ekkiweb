@@ -9,8 +9,7 @@ import * as userActions from './actions/user'
 
 
 import {
-    BrowserRouter as Router,
-    Route,
+
     Redirect 
   
   } from 'react-router-dom'

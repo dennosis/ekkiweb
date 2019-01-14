@@ -47,15 +47,44 @@ class Transactions extends Component{
         //console.log(this.props)
      }
 
+    validFields = () =>{
+        if(this.state.transactionData.idUserDest == ''){
+            alert("O Usuario deve ser preenchido")    
+            return false
+        }else if(this.state.transactionData.value == ''){
+            alert("O Valor deve ser Preenchido")    
+            return false
+        }else if((this.props.userValueAccount < this.state.transactionData.value) && this.state.transactionData.idcard ==""){
+            alert("O Valor da tranferencia excede a Conta, Selecionar um Cartão")    
+            return false
+        }
 
+        return true
+    }
 
-    createTransaction= async()=>{
-        const tmpdata = this.state.transactionData;
-        tmpdata.date = new Date();
-        await this.props.createTransaction(this.props.userId, tmpdata)
-        await this.setState({
-            isAddTransaction: false
-        })
+    createTransaction= async ()=>{
+        if(this.validFields()){
+            const tmpdata = this.state.transactionData;
+            tmpdata.date = new Date();
+            
+            var varcard;
+            var valuedesc;
+            if((parseFloat(this.props.userValueAccount) - parseFloat(tmpdata.value)) >= 0 ){
+                varcard = 0
+                valuedesc = parseFloat(tmpdata.value)
+            }else{
+                varcard = parseFloat(tmpdata.value) - parseFloat(this.props.userValueAccount)
+                valuedesc = parseFloat(this.props.userValueAccount)
+            }
+
+            tmpdata.valuecard = varcard;
+            
+            await this.props.createTransaction(this.props.userId, tmpdata)
+            await this.props.tranferValue(tmpdata.idUserOrig,tmpdata.idUserDest,tmpdata.value,valuedesc)
+            await this.setState({
+                isAddTransaction: false
+            })
+        }
     }
 
     addItens=()=>{
@@ -64,13 +93,7 @@ class Transactions extends Component{
         })
     }
 
-/*
-    addContact = async (idContact) => {
-        const cantact = {idUser:idContact }
-        await this.props.addContact(this.props.userId, cantact);
-        //console.log(idContatct)
-    }
-*/
+
 
     inputOnChange = (value, name) =>{
         this.setState({
@@ -161,6 +184,7 @@ class Transactions extends Component{
 
 const mapStateToProps = state => ({
     userId: state.user.id,
+    userValueAccount: state.user.valueAccount,
     contacts: state.contacts,
     cards: state.cards,
     transactions: state.transactions

@@ -18,6 +18,8 @@ export default function user(state = [], action) {
         
             return action.user
 
+        case "TRANSFER_VALUE":
+            return action.user
 
       default:
         return state;

@@ -58,3 +58,40 @@ export function createUser(item) {
     };
     function success(user) { return { type: 'REGISTER_SUCCESS', user} }
 }
+
+
+
+
+
+
+export function  tranferValue(iduserOrig,iduserDest,valueDep,valueDesc) {
+    return async dispatch => {
+        var userOrig = await editObj(iduserOrig);
+        var userDest = await editObj(iduserDest);
+        //valueAccount
+
+        var tmpvalueAccount = (parseFloat(userOrig.valueAccount) - parseFloat(valueDesc))
+        //userOrig = {...userOrig, valueAccount:tmpvalueAccount}
+        userOrig.valueAccount = tmpvalueAccount;
+        var tmpvalueAccountDep = (parseFloat(userDest.valueAccount) + parseFloat(valueDep))
+        //userDest = {...userDest, valueAccount:tmpvalueAccountDep}
+        userDest.valueAccount = tmpvalueAccountDep;
+
+        await api.updateUser(iduserDest,userDest)
+        
+        await api.updateUser(iduserOrig, userOrig).then((res)=>{
+            dispatch(success(res.data));
+        });
+
+    };
+
+    function editObj(id){
+        return api.getUserById(id)
+            .then(resp => {
+                return resp.data   
+            })
+    
+    }
+
+    function success(user) { return { type: 'TRANSFER_VALUE', user}}
+}

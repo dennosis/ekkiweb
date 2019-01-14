@@ -17,7 +17,7 @@ export const deleteContact = (idUser, idContact) => api.delete('contacts/'+idCon
 
 export const getUserByAccount = (idUser, account) => api.get('user?account='+account)
 export const getUserByCpf = (idUser, cpf) => api.get('user?cpf='+cpf)
-export const getContactById = (idUser, id) => api.get('contacts?idUser='+id)
+export const getContactById = (idUser, id) => api.get('contacts?idUser='+id+'&&idUserOrig='+idUser)
 export const addContact = (userId, item) => api.post('contacts', item)
 
 export const getUserByName = (idUser, fname, lname) => {
