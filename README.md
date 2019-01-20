@@ -1,6 +1,6 @@
 ## Available Scripts
 
-com o yarn instalado excute os segunte comando para instalar as dependencias
+com o yarn instalado excute o segunte comando para instalar as dependencias
 ### `yarn install`
 
 subir o servidor Json
