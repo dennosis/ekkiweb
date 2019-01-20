@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //botoes icones
 import {faPlusSquare} from '@fortawesome/free-solid-svg-icons'
 import Transaction from './Transaction';
+//import { AST_False } from 'terser';
 
 
 
@@ -26,35 +27,43 @@ class Transactions extends Component{
           this.state = {
             isAddTransaction:false,
             transactionData:{
-                idUserOrig:this.props.userId,
-                idUserDest:'',
-                operation:'',
-                value:'',
-                valuecard:'',
-                idcard:'',
-                date:'',
-                isConfirmed:false,
+                userDest:'',
+                operation:1,
+                value:0,
+                valueCard:undefined,
+                card:undefined
             }
         }
     }
 
-
+   /*
+    operation:
+        1 - tranferencia nomal
+        2 - transferencia parcial normal, parcial cartao
+        3 - transferencia somente cartao
+    */
 
     componentDidMount(){
-        this.props.getContacts(this.props.userId);
-        this.props.getCards(this.props.userId);
-        this.props.getTransactions(this.props.userId);
-        //console.log(this.props)
-     }
+        this.props.getContacts(this.props.token);
+        this.props.getCards(this.props.token);
+        this.props.getTransactions(this.props.token);
+    }
+
+    componentWillReceiveProps(){
+        this.setState({
+            isAddTransaction: false
+        })
+    }
+
 
     validFields = () =>{
-        if(this.state.transactionData.idUserDest == ''){
+        if(this.state.transactionData.idUserDest === ''){
             alert("O Usuario deve ser preenchido")    
             return false
-        }else if(this.state.transactionData.value == ''){
+        }else if(this.state.transactionData.value === ''){
             alert("O Valor deve ser Preenchido")    
             return false
-        }else if((this.props.userValueAccount < this.state.transactionData.value) && this.state.transactionData.idcard ==""){
+        }else if((this.props.userValueAccount < this.state.transactionData.value) && this.state.transactionData.idcard === ""){
             alert("O Valor da tranferencia excede a Conta, Selecionar um Cartão")    
             return false
         }
@@ -65,10 +74,10 @@ class Transactions extends Component{
     createTransaction= async ()=>{
         if(this.validFields()){
             const tmpdata = this.state.transactionData;
-            tmpdata.date = new Date();
-            
+            /*
             var varcard;
             var valuedesc;
+            
             if((parseFloat(this.props.userValueAccount) - parseFloat(tmpdata.value)) >= 0 ){
                 varcard = 0
                 valuedesc = parseFloat(tmpdata.value)
@@ -76,14 +85,19 @@ class Transactions extends Component{
                 varcard = parseFloat(tmpdata.value) - parseFloat(this.props.userValueAccount)
                 valuedesc = parseFloat(this.props.userValueAccount)
             }
-
-            tmpdata.valuecard = varcard;
             
-            await this.props.createTransaction(this.props.userId, tmpdata)
-            await this.props.tranferValue(tmpdata.idUserOrig,tmpdata.idUserDest,tmpdata.value,valuedesc)
-            await this.setState({
-                isAddTransaction: false
-            })
+            
+            tmpdata.valueCard = varcard;
+            */
+
+            //await this.props.createTransaction(this.props.token, tmpdata)
+            console.log(tmpdata)
+            await this.props.createTransaction(this.props.token, tmpdata)
+
+           // await this.props.tranferValue(tmpdata.idUserOrig,tmpdata.idUserDest,tmpdata.value,valuedesc)
+           // await this.setState({
+           //     isAddTransaction: false
+           // })
         }
     }
 
@@ -107,6 +121,7 @@ class Transactions extends Component{
 
     
     render(){
+
         return (
     
             <div className="component box e">
@@ -121,37 +136,41 @@ class Transactions extends Component{
                         
                         <div className = "groupInput" >
                             <label className = "labelInput">Enviar Para:</label>
-                            <select name = 'idUserDest' value = {this.state.transactionData.idUserDest} className="inputForm" onChange={e => this.inputOnChange(e.target.value, e.target.name)}>
+                            <select name = 'userDest' value = {this.state.transactionData.userDest} className="inputForm" onChange={e => this.inputOnChange(e.target.value, e.target.name)}>
                                     <option   value=''></option>
                                 {
-                                this.props.contacts.map((contact, index) => <option key={index}  value={contact.id}>{contact.firstName} - Conta:{contact.account}</option>) 
+                                this.props.contacts.map((contact, index) => <option key={index}  value={contact.idUserContact}> {contact.firstName} - Conta:{contact.account}</option>) 
                                 }
                             </select>
                         </div>
-
-                        <div className = "groupInput" >
-                            <label className = "labelInput">Catão</label>
-                            <select name = 'idcard' value = {this.state.transactionData.idcard} className="inputForm" onChange={e => this.inputOnChange(e.target.value, e.target.name)}>
-                                <option   value=''></option>
-                                {
-                                this.props.cards.map((card, index) => {
-                                    var tmptype;
-                                    if(card.tipe == 1){
-                                        tmptype = 'Crédito'
-                                    }else{
-                                        tmptype = 'Débito'
-                                    }
-                                    return <option key={index}  value={card.id}>{card.number} - {tmptype}</option>
-                                }) 
-                                }
-                            </select>
-                        </div>
-
 
 
                         <div className = "groupInput" >
                             <label  className = "labelInput">Valor Transação</label>
                             <input name = 'value' value = {this.state.transactionData.value} type="number"  className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
+                        </div>
+
+                        <div className = "groupInput" >
+                            <label className = "labelInput">Catão</label>
+                            <select name = 'card' value = {this.state.transactionData.card} className="inputForm" onChange={e => this.inputOnChange(e.target.value, e.target.name)}>
+                                <option   value=''></option>
+                                {
+                                this.props.cards.map((card, index) => {
+                                    var tmptype;
+                                    if(card.tipe === 1){
+                                        tmptype = 'Crédito'
+                                    }else{
+                                        tmptype = 'Débito'
+                                    }
+                                    return <option key={index}  value={card._id}>{card.number} - {tmptype}</option>
+                                }) 
+                                }
+                            </select>
+                        </div>
+
+                        <div className = "groupInput" >
+                            <label  className = "labelInput">Valor Transação</label>
+                            <input name = 'valueCard' value = {this.state.transactionData.valueCard} type="number"  className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
                         </div>
 
 
@@ -184,6 +203,7 @@ class Transactions extends Component{
 
 const mapStateToProps = state => ({
     userId: state.user.id,
+    token: state.user.token,
     userValueAccount: state.user.valueAccount,
     contacts: state.contacts,
     cards: state.cards,
@@ -192,4 +212,38 @@ const mapStateToProps = state => ({
   
 const mapDispatchToProps = dispatch => bindActionCreators(transactionsActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Transactions);//
+export default connect(mapStateToProps, mapDispatchToProps)(Transactions);
+
+
+
+
+
+
+
+/*
+
+    createTransaction= async ()=>{
+        if(this.validFields()){
+            const tmpdata = this.state.transactionData;
+            tmpdata.date = new Date();
+            
+            var varcard;
+            var valuedesc;
+            if((parseFloat(this.props.userValueAccount) - parseFloat(tmpdata.value)) >= 0 ){
+                varcard = 0
+                valuedesc = parseFloat(tmpdata.value)
+            }else{
+                varcard = parseFloat(tmpdata.value) - parseFloat(this.props.userValueAccount)
+                valuedesc = parseFloat(this.props.userValueAccount)
+            }
+
+            tmpdata.valuecard = varcard;
+            
+            await this.props.createTransaction(this.props.userId, tmpdata)
+            await this.props.tranferValue(tmpdata.idUserOrig,tmpdata.idUserDest,tmpdata.value,valuedesc)
+            await this.setState({
+                isAddTransaction: false
+            })
+        }
+    }
+*/

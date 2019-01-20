@@ -1,47 +1,54 @@
 import api from '../Api'
 
-export function createTransaction(userId,item) {
-    return async dispatch => {
-       await api.createTransaction(userId, item).then(async(res)=>{
-
-            var  transac = await editObj(res.data.id, res.data.idUserDest, 1, res.data.value, res.data.idcard, res.data.valuecard, res.data.date, res.data.isConfirmed)
-                            
-            dispatch(success(transac));
-       });
-    };
-
-
-    function editObj(id, idUser, typetransation, value, idcard, valuecard, date, isConfirmed){
-        return api.getUserById(idUser)
-            .then(resp => {
-                return {
-                    id,
-                    idUser,
-                    nameUser: resp.data.firstName,
-                    account: resp.data.account,
-                    img: resp.data.img,
-                    typetransation,
-                    value,
-                    idcard,
-                    valuecard,
-                    date,
-                    isConfirmed
-                }   
-            })
-    
+export function createTransaction(token,transaction) {
+    return dispatch => {
+        api.createTransaction(token, transaction)
+            .then(
+                res=>{ 
+                    dispatch(success(res.data.transaction));
+                },
+                error=>{
+                    dispatch(failure(error.response.data.error));
+                }
+        )
     }
 
-
     function success(transaction) { return { type: 'CREATE_TRANSACTION', transaction}}
+    function failure(error) { return { type: 'FAILURE_CREATE_TRANSACTION', error}}
 }
 
 
 
 
 
-export  function  getTransactions(idUser) {
-    return async dispatch => {
+export  function  getTransactions(token) {
+    return dispatch => {
 
+        api.getTransactions(token)            
+            .then(
+                res => { 
+                    //console.log(res)
+                    dispatch(success(res.data.transactions));
+                },
+                error=> {
+                    dispatch(failure(error.response.data.error));
+                }
+            )
+    }
+
+    function success(transactions) { return { type: 'GET_TRANSACTIONS', transactions } }
+    function failure(error) { return { type: 'FAILURE_LOAD_TRANSACTIONS', error } }
+}
+
+
+
+
+
+
+
+
+
+/*
         var alltransactions = [];
         
         alltransactions = await api.getTransactions(idUser, 1)
@@ -82,8 +89,6 @@ export  function  getTransactions(idUser) {
 
 
 
-
-
     function editObj(id, idUser, typetransation, value, idcard, valuecard, date, isConfirmed){
         return api.getUserById(idUser)
             .then(resp => {
@@ -101,22 +106,7 @@ export  function  getTransactions(idUser) {
                     isConfirmed
                 }   
             })
-    
-    }
-
-
-
-    function success(transactions) { return { type: 'GET_TRANSACTIONS', transactions } }
-}
-
-
-
-
-
-
-
-
-
+    */
 
 
 
@@ -167,5 +157,50 @@ return api.getUserById(usertransation)
         isConfirmed:element.isConfirmed
     }   
 })
+
+*/
+
+
+
+
+
+
+/*
+
+
+export function createTransaction(userId,item) {
+    return async dispatch => {
+       await api.createTransaction(userId, item).then(async(res)=>{
+
+            var  transac = await editObj(res.data.id, res.data.idUserDest, 1, res.data.value, res.data.idcard, res.data.valuecard, res.data.date, res.data.isConfirmed)
+                            
+            dispatch(success(transac));
+       });
+    };
+
+
+    function editObj(id, idUser, typetransation, value, idcard, valuecard, date, isConfirmed){
+        return api.getUserById(idUser)
+            .then(resp => {
+                return {
+                    id,
+                    idUser,
+                    nameUser: resp.data.firstName,
+                    account: resp.data.account,
+                    img: resp.data.img,
+                    typetransation,
+                    value,
+                    idcard,
+                    valuecard,
+                    date,
+                    isConfirmed
+                }   
+            })
+    
+    }
+
+
+    function success(transaction) { return { type: 'CREATE_TRANSACTION', transaction}}
+}
 
 */

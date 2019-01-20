@@ -29,11 +29,11 @@ class Contact extends Component{
     
 
     deleteContact = () => {
-        this.props.deletefunction(this.props.data.idContact)
+        this.props.deletefunction(this.props.data._id)
     }
 
     addContact = () => {
-        this.props.addfunction(this.props.data.id)
+        this.props.addfunction(this.props.data.idUserContact)
     }
 
 

@@ -61,11 +61,11 @@ class LoginPage extends Component{
             lastName: this.state.register.lastName,
             email: this.state.register.email,
             password: this.state.register.password,
-            cpf: '',
+            //cpf: '',
             account: this.state.register.account,
-            isActive:true,
-            valueAccount: "",
-            img: ""
+           // isActive:true,
+            //valueAccount: "",
+           // img: ""
         }
 
         if(this.state.register.password === this.state.register.confirmpassword){

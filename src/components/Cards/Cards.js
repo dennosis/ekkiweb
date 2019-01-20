@@ -18,13 +18,12 @@ class Cards extends Component{
           this.state = {
             isEdit:false,
             cardEdit:{            
-                id:'',
-                type: '',
-                number: '',
-                codeVerf: '',
-                dtExp: '',
-                country:'',
-                idUserOrig: this.props.userId
+                _id:undefined,
+                type:undefined,
+                number: undefined,
+                codVerf: undefined,
+                dtExp: undefined,
+                country:undefined
 
             },
             isEditCard:false
@@ -35,80 +34,75 @@ class Cards extends Component{
 
 
     componentDidMount(){
-       this.props.getCards(this.props.userId);
-       console.log(this.props.userId)
+       this.props.getCards(this.props.token);
     }
 
+
+    componentWillReceiveProps(){
+        this.emptyEditCard();
+        this.setState({
+            isEdit: false,
+            isEditCard: false
+        });
+    }
+
+
+
     addItens = () => {
-     
         this.setState({
            isEdit: !this.state.isEdit
         });
 
         this.emptyEditCard();
-        
     }
 
 
 
 
-     saveItem = async () => {
+    saveItem = async () => {
 
         if(this.state.isEditCard){
 
             try {
-
-                await this.props.updateCard(this.state.cardEdit);
-                await this.emptyEditCard();
-                await this.setState({
-                    isEdit: false,
-                    isEditCard: false
-                });
+                console.log(this.state.cardEdit)
+                await this.props.updateCard(this.props.token, this.state.cardEdit);
                 
             }catch(err) {
-                alert(err); 
+                console.log(err); 
             }
 
         }else{
             const newItem = {
-                idUserOrig: this.props.userId,
                 type: this.state.cardEdit.type,
                 number: this.state.cardEdit.number,
-                codeVerf: this.state.cardEdit.codeVerf,
+                codVerf: this.state.cardEdit.codVerf,
                 dtExp: this.state.cardEdit.dtExp,
                 country:this.state.cardEdit.country
             }
-
-            try {
-                await this.props.createCard(this.props.userId, newItem);
-                await this.emptyEditCard();
-                await this.setState({
-                    isEdit: false
-                });
-            }catch(err) {
-                alert(err); // TypeError: failed to fetch
-            }
+            console.log(newItem)
+            await this.props.createCard(this.props.token, newItem);
+           
         }
     }
 
 
 
-     deleteCard = async (id) => {
-        await this.props.deleteCard(this.props.userId,id);
+
+
+    deleteCard = async (idCard) => {
+        await this.props.deleteCard(this.props.token, idCard);
     }
 
 
     editCard = (cardedit) =>{
         this.setState({
             cardEdit:{
-                id:cardedit.id,
+                _id:cardedit._id,
                 type: cardedit.type,
                 number: cardedit.number,
-                codeVerf: cardedit.codeVerf,
+                codVerf: cardedit.codVerf,
                 dtExp: cardedit.dtExp,
                 country: cardedit.country,
-                idUserOrig: this.props.userId,
-
             },
             isEdit: true,
             isEditCard:true
@@ -127,12 +121,12 @@ class Cards extends Component{
     emptyEditCard = () =>{
         this.setState({
             cardEdit:{            
-                id:'',
-                type: '',
-                number: '',
-                codeVerf: '',
-                dtExp: '',
-                country:''
+                _id:"",
+                type:"",
+                number: "",
+                codVerf: "",
+                dtExp: "",
+                country:""
 
             }
         });
@@ -156,6 +150,7 @@ class Cards extends Component{
                         <div className = "groupInput" >
                             <label className = "labelInput">Tipo Operação</label>
                             <select name ='type' value={this.state.cardEdit.type}  className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}>
+                                <option></option>
                                 <option value="1">Crédito</option>
                                 <option value="2">Débito</option>
                             </select>
@@ -173,13 +168,14 @@ class Cards extends Component{
 
                         <div className = "groupInput" >
                             <label className = "labelInput">Cádigo Verificação</label>
-                            <input name = 'codeVerf' value = {this.state.cardEdit.codeVerf} type="number" className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
+                            <input name = 'codVerf' value = {this.state.cardEdit.codVerf} type="number" className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
                         </div>
 
 
                         <div className = "groupInput" >
                             <label className = "labelInput">Pais</label>
                             <select name = 'country' value = {this.state.cardEdit.country} className="inputForm" onChange={e => this.inputOnChange(e.target.value, e.target.name)}>
+                                <option></option>
                                 <option value="1">Brasil</option>
                                 <option value="2">Argentina</option>
                             </select>
@@ -199,7 +195,9 @@ class Cards extends Component{
                 !this.state.isEdit &&
                 
                 <div className="corpComponent componentScrolling">
-                        {this.props.cards.map((card) => <Card  key={card.id} data={card} editfunction = {this.editCard} deletefunction = {this.deleteCard}  />)}
+                        {
+                              this.props.cards.map((card, index) => <Card  key={index} data={card} editfunction = {this.editCard} deletefunction = {this.deleteCard}  />)
+                        }
                 </div>
                 
                 }
@@ -211,9 +209,9 @@ class Cards extends Component{
 
 
 
-//<button onClick = {this.addItens} className="btn">+</button>
 
 const mapStateToProps = state => ({
+    token: state.user.token,
     userId: state.user.id,
     cards: state.cards,
 });

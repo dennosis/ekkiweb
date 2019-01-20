@@ -20,13 +20,26 @@ class User extends Component{
     
         
 
+/*
+        this.state = {
+            firstName:undefined,
+            lastName: undefined,
+            email: undefined,
+            password:undefined,
+            cpf: undefined,
+            account: undefined,
+            isActive:undefined,
+            valueAccount:undefined,
+            img:undefined,
+            isSave:false
+        }
+*/
 
         this.state = {
-            id: this.props.user.id,
             firstName: this.props.user.firstName,
             lastName: this.props.user.lastName,
             email: this.props.user.email,
-            password:this.props.user.password,
+            password:"",
             cpf: this.props.user.cpf,
             account: this.props.user.account,
             isActive:this.props.user.isActive,
@@ -34,16 +47,17 @@ class User extends Component{
             img: this.props.user.img,
             isSave:false
         } 
+        
     
     }
 
 
     saveUser = ()=>{
-      const upuser = {
-            id: this.state.id,
+        
+      const user = {
+            _id: this.props.user._id,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
-            email: this.state.email,
             password: this.state.password,
             cpf: this.state.cpf,
             account: this.state.account,
@@ -51,9 +65,8 @@ class User extends Component{
             valueAccount: this.state.valueAccount,
             img: this.state.img
         }
-
-
-        this.props.updateUser(upuser.id, upuser);
+        console.log(user)
+        this.props.updateUser(this.props.user.token, user);
     }
 
     inputOnChange = (value, name) =>{
@@ -75,7 +88,7 @@ class User extends Component{
                     
                         <div className = "groupInput" >
                             <label  className = "labelInput">Nome</label>
-                            <input name = 'firstName' value = {  this.state.firstName} type="text"  className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
+                            <input name = 'firstName' value = {this.state.firstName} type="text"  className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
                         </div>
 
                         <div className = "groupInput" >

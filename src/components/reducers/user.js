@@ -1,21 +1,18 @@
 export default function user(state = [], action) {
     switch (action.type) {
     
-
         case 'LOGIN_SUCCESS':
-            const quser = action.user
-            return quser 
+            return action.user 
         
         case 'SAVE_SUCCESS':
-            const saveuser = action.user
-            return saveuser 
+            return {...action.user,
+                     token:  state.token
+                    }       
 
         case 'LOGOUT_SUCCESS':
-        
             return action.user
         
         case 'REGISTER_SUCCESS':
-        
             return action.user
 
         case "TRANSFER_VALUE":

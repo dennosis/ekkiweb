@@ -17,9 +17,15 @@ export default function transactions(state = [], action) {
             */
 
         case 'CREATE_TRANSACTION':
-          const transaction = action.transaction
-         
-            return  [transaction, ...state]
+            let tmptransaction 
+            const transaction = action.transaction
+
+            if(transaction.transBefore){
+                tmptransaction = state.filter(item => item._id !== transaction.transBefore);
+            }else{
+                tmptransaction = state
+            }
+            return  [transaction, ...tmptransaction]
 
         case 'GET_TRANSACTIONS':
             return action.transactions;

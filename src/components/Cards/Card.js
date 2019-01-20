@@ -13,11 +13,11 @@ import { faPencilAlt, faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 class Card extends Component{
     constructor(props) {
          super(props)
+         this.state = {} 
     }
     
-    
     deleteCard = () => {
-        this.props.deletefunction(this.props.data.id)
+        this.props.deletefunction(this.props.data._id)
     }
 
     editCard = () => {
@@ -38,22 +38,22 @@ class Card extends Component{
         }
         
         var cardcreditico;
-        if(this.props.data.number.substring(0, 2) === '34'){
+        if((""+this.props.data.number).substring(0, 2) === '34'){
             cardcreditico = faCcAmex
 
-        }else if(this.props.data.number.substring(0, 2) === '35'){
+        }else if((""+this.props.data.number).substring(0, 2) === '35'){
             cardcreditico = faCcJcb
 
-        }else if(this.props.data.number.substring(0, 3) === '300'){
+        }else if((""+this.props.data.number).substring(0, 3) === '300'){
             cardcreditico = faCcDinersClub
 
-        }else if(this.props.data.number.substring(0, 1) === '4'){
+        }else if((""+this.props.data.number).substring(0, 1) === '4'){
             cardcreditico = faCcVisa
 
-        }else if(this.props.data.number.substring(0, 2) === '51'){
+        }else if((""+this.props.data.number).substring(0, 2) === '51'){
             cardcreditico = faCcMastercard
         
-        }else if(this.props.data.number.substring(0, 5) === '6011'){
+        }else if((""+this.props.data.number).substring(0, 5) === '6011'){
             cardcreditico = faCcDiscover
 
         }else{

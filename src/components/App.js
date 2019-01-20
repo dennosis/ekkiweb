@@ -28,6 +28,7 @@ import * as userActions from './actions/user'
 class App extends Component {
   constructor(props) {
     super(props)
+    this.state = {} 
   }
 
 

@@ -26,51 +26,34 @@ class Contacts extends Component{
                 type:'name',
                 data:''
             }
-            
-            
-
         }
-
     }
-
-
 
     componentDidMount(){
-        this.props.getContacts(this.props.userId);
+        this.props.getContacts(this.props.token);
      }
 
-/*
-    getUserbId=(id)=>{
-
-        this.setState({
-            isSearch: !this.state.isSearch
-        })
-
-     
-    }
-    */
-
-
     searchItens=()=>{
-
         this.setState({
             isSearch: !this.state.isSearch
         })
 
         if(this.state.isSearch){
-            this.props.getContacts(this.props.userId);
+            this.props.getContacts(this.props.token);
         }
     }
 
 
-
     deleteContact = async (idContatct) => {
-        await this.props.deleteContact(this.props.userId, idContatct);
+        await this.props.deleteContact(this.props.token, idContatct);
     }
 
-    addContact = async (idContact) => {
-        const cantact = {idUser:idContact, idUserOrig: this.props.userId }
-        await this.props.addContact(this.props.userId, cantact);
+    addContact = (idContact) => {
+        const cantact = {contact:idContact}
+        this.props.addContact(this.props.token, cantact);
+
+        //const cantact = {idUser:idContact, idUserOrig: this.props.userId }
+        //await this.props.addContact(this.props.userId, cantact);
         //console.log(idContatct)
     }
 
@@ -86,26 +69,9 @@ class Contacts extends Component{
     }
 
 
-    findUser = async () =>{
-            if(this.state.searchData.type === 'name'){
-
-                var first = this.state.searchData.data.split(' ')[0]
-                var last = this.state.searchData.data.split(' ')
-                last.shift()
-                last = last.join(' ')
-                //console.log(first)
-                //console.log(last)
-                const username = {first, last}
-                console.log(username)
-                this.props.findContacts(this.props.userId, username, this.state.searchData.type);
-
-            }else{
-
-                this.props.findContacts(this.props.userId, this.state.searchData.data, this.state.searchData.type);
-
-            }
-        
-
+    findUser = () =>{
+        const find =   { [this.state.searchData.type]:this.state.searchData.data}
+        this.props.findContacts(this.props.token, find);
     }
 
     render(){
@@ -138,9 +104,11 @@ class Contacts extends Component{
 
                 {
                 <div className="corpComponent componentScrolling">
-                        {/*this.state.contacts.map((contact, index) => <Contact  key={index} data={contact}/>)*/
+                        {
+                           
                            this.props.contacts.map((contact, index) => <Contact  key={index} data={contact} deletefunction = {this.deleteContact} addfunction = {this.addContact}/>) 
-                        }
+
+                       }
                 </div>
                 }
 
@@ -154,6 +122,7 @@ class Contacts extends Component{
 //export default Contacts
 
 const mapStateToProps = state => ({
+    token: state.user.token,
     userId: state.user.id,
     contacts: state.contacts
 });

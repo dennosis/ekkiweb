@@ -5,33 +5,34 @@ const api = axios.create({
 })
 
 
-export const getCards = (userId) => api.get('cards?idUserOrig='+userId)
-export const deleteCard = (userId, id)=> api.delete('cards/'+id)
-export const createCard = (userId, item) => api.post('cards', item)
-export const updateCard = (item) => api.put('cards/'+item.id, item)
-export const login = (email,pass) => api.get('user?email='+email+'&&password='+pass+'')
+//export const getCards = (userId) => api.get('cards?idUserOrig='+userId)
+//export const deleteCard = (userId, id)=> api.delete('cards/'+id)
+//export const createCard = (userId, item) => api.post('cards', item)
+//export const updateCard = (item) => api.put('cards/'+item.id, item)
+//export const login = (email,pass) => api.get('user?email='+email+'&&password='+pass+'')
 
-export const getContacts = (iduser) => api.get('contacts?idUserOrig='+iduser)
-export const getUserById = (id) => api.get('user/'+id)
-export const deleteContact = (idUser, idContact) => api.delete('contacts/'+idContact)
+//export const getContacts = (iduser) => api.get('contacts?idUserOrig='+iduser)
+//export const getUserById = (id) => api.get('user/'+id)
+//export const deleteContact = (idUser, idContact) => api.delete('contacts/'+idContact)
 
-export const getUserByAccount = (idUser, account) => api.get('user?account='+account)
-export const getUserByCpf = (idUser, cpf) => api.get('user?cpf='+cpf)
-export const getContactById = (idUser, id) => api.get('contacts?idUser='+id+'&&idUserOrig='+idUser)
-export const addContact = (userId, item) => api.post('contacts', item)
-
+//export const getUserByAccount = (idUser, account) => api.get('user?account='+account)
+//export const getUserByCpf = (idUser, cpf) => api.get('user?cpf='+cpf)
+//export const getContactById = (idUser, id) => api.get('contacts?idUser='+id+'&&idUserOrig='+idUser)
+//export const addContact = (userId, item) => api.post('contacts', item)
+/*
 export const getUserByName = (idUser, fname, lname) => {
   if(lname.length > 0){
     lname = '&&lastName='+lname;
   }
   return api.get('user?firstName='+fname+""+lname)
 }
+*/
 
-export const updateUser = (idUser, item) => api.put('user/'+item.id, item)
+//export const updateUser = (idUser, item) => api.put('user/'+item.id, item)
 
-export const createTransaction = (userId, item) => api.post('transactions', item)
-export const createUser = (item) => api.post('user', item)
+//export const createTransaction = (userId, item) => api.post('transactions', item)
 
+/*
 export const getTransactions = (iduser, tptrans) => {
   var filteradd
   if(tptrans === 1){
@@ -45,6 +46,31 @@ export const getTransactions = (iduser, tptrans) => {
   return api.get('transactions?'+filteradd)
 
 }
+*/
+
+export const login = (authenticate) => api.post('login/authenticate', authenticate)
+export const createUser = (user) => api.post('login/register', user)
+
+export const updateUser = (token, user) => api.put('user/'+user._id, user, {headers: {'Authorization': 'Bearer ' + token}})
+
+
+
+export const getCards = (token) => api.get('cards', {headers: {'Authorization': 'Bearer ' + token}})
+export const deleteCard = (token, idCard)=> api.delete('cards/'+idCard, {headers: {'Authorization': 'Bearer ' + token}})
+export const updateCard = (token, card) => api.put('cards/'+card._id, card, {headers: {'Authorization': 'Bearer ' + token}})
+export const createCard = (token, card) => api.post('cards', card, {headers: {'Authorization': 'Bearer ' + token}})
+
+
+
+export const getTransactions = (token) => api.get('transactions', {headers: {'Authorization': 'Bearer ' + token}})
+export const createTransaction = (token, transaction) => api.post('transactions',transaction, {headers: {'Authorization': 'Bearer ' + token}})
+
+export const getContacts = (token) => api.post('contacts/find',{},{headers: {'Authorization': 'Bearer ' + token}})
+export const findContacts = (token, find) => api.post('contacts/find',find,{headers: {'Authorization': 'Bearer ' + token}} )
+export const deleteContact = (token, idContact) => api.delete('contacts/'+idContact, {headers: {'Authorization': 'Bearer ' + token}})
+export const addContact = (token, contact) => api.post('contacts', contact, {headers: {'Authorization': 'Bearer ' + token}})
+
+
 
 
 
@@ -55,17 +81,18 @@ const apis = {
     updateCard,
     login,
     getContacts,
-    getUserById,
+    //getUserById,
     deleteContact,
-    getUserByName,
-    getUserByAccount,
-    getUserByCpf,
-    getContactById,
+   // getUserByName,
+   // getUserByAccount,
+   // getUserByCpf,
+   // getContactById,
     addContact,
     updateUser,
     createTransaction,
     getTransactions,
-    createUser
+    createUser,
+    findContacts
 }
 
 export default apis

@@ -4,11 +4,12 @@ import './Transaction.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 //botoes icones   faArrowAltCircleDown
-import {faTrashAlt, faArrowAltCircleDown, faArrowAltCircleUp, faUser} from '@fortawesome/free-solid-svg-icons'
+import {faArrowAltCircleDown, faArrowAltCircleUp, faUser} from '@fortawesome/free-solid-svg-icons'
 
 class Transaction extends Component{
     constructor(props) {
          super(props)
+         this.state = {} 
     }
 
     render(){
@@ -35,8 +36,8 @@ class Transaction extends Component{
                      <span className="transaction-value">R$ {this.props.data.value}</span>
                      <div className="transaction-tipe">
                      
-                     {this.props.data.typetransation == 1 && <FontAwesomeIcon icon={faArrowAltCircleUp} size="1x"/>}
-                     {this.props.data.typetransation == 2 && <FontAwesomeIcon icon={faArrowAltCircleDown} size="1x"/> }
+                     {this.props.data.typetransation === 1 && <FontAwesomeIcon icon={faArrowAltCircleUp} size="1x"/>}
+                     {this.props.data.typetransation === 2 && <FontAwesomeIcon icon={faArrowAltCircleDown} size="1x"/> }
                      
                      
                     </div>
