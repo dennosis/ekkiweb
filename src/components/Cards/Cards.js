@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //botoes icones
 import {faPlusSquare} from '@fortawesome/free-solid-svg-icons'
 
+import Cleave from 'cleave.js/react';
+
 
 class Cards extends Component{
     constructor(props){
@@ -133,42 +135,41 @@ class Cards extends Component{
     }
 
     render(){
-        
+
         return (
             
             <div className="component box e">
                 <div className="titleComponent">
                         <span>Cartões</span>
-                        <FontAwesomeIcon onClick= {this.addItens} icon={faPlusSquare} size="2x"/>
-                        
+                        <FontAwesomeIcon onClick= {this.addItens} icon={faPlusSquare} size="2x"/> 
                 </div>
         
                 {
                     this.state.isEdit && 
 
-                     <div className="addItemComponent componentScrolling">
-                        <div className = "groupInput" >
-                            <label className = "labelInput">Tipo Operação</label>
+                     <div className="addItemComponent componentScrolling" style={{gridTemplateColumns: '1fr 1fr'}} >
+                        <div className = "groupInput" style={{gridColumn: '1/3'}}>
+                            <label className = "labelInput">Tipo Cartão</label>
                             <select name ='type' value={this.state.cardEdit.type}  className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}>
                                 <option></option>
                                 <option value="1">Crédito</option>
                                 <option value="2">Débito</option>
                             </select>
                         </div>
-
+                        
                         <div className = "groupInput" >
                             <label  className = "labelInput">Numero Cartão</label>
-                            <input name = 'number' value = {this.state.cardEdit.number} type="number"  className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
+                            <Cleave name = 'number' className = "inputForm" value = {this.state.cardEdit.number}  options={{creditCard: true, delimiter: '-'}}   onChange={e => this.inputOnChange(e.target.rawValue, e.target.name)}/>
                         </div>
 
                         <div className = "groupInput" >
                             <label className = "labelInput">Data Vencimento</label>
-                            <input name ='dtExp' value = {this.state.cardEdit.dtExp} type="date" className="inputForm" onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
+                            <Cleave name = 'dtExp' className = "inputForm" value = {this.state.cardEdit.dtExp}  options={{date: true,datePattern: ['m', 'Y']}}   onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
                         </div>
 
                         <div className = "groupInput" >
                             <label className = "labelInput">Cádigo Verificação</label>
-                            <input name = 'codVerf' value = {this.state.cardEdit.codVerf} type="number" className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
+                            <Cleave name = 'codVerf' className = "inputForm" value = {this.state.cardEdit.codVerf}  options={{numeral: true, numeralIntegerScale: 3, numeralDecimalScale: 0, delimiter: ''}}   onChange={e => this.inputOnChange(e.target.rawValue, e.target.name)}/>
                         </div>
 
 
@@ -183,7 +184,7 @@ class Cards extends Component{
 
 
 
-                        <div className = "groupButton">
+                        <div className = "groupButton" style={{gridColumn: '1/3'}}>
                             <button type = 'button' onClick = {this.saveItem} className="btn">Salvar</button>
                             <button type = 'button' onClick = {this.addItens} className="btn">Cancelar</button>
                         </div>
@@ -219,3 +220,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators(cardActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cards);
+
+
+//<input name = 'number' value = {this.state.cardEdit.number} type="number"  className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
+
+
+//<input name ='dtExp' value = {this.state.cardEdit.dtExp} type="date" className="inputForm" onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
+
+
+//<input name = 'codVerf' value = {this.state.cardEdit.codVerf} type="number" className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>

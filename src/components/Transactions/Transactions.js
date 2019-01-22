@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './Transactions.css';
-//import Contact from './Contact'
 
 
 import {bindActionCreators} from 'redux'
@@ -8,14 +7,12 @@ import  {connect}  from 'react-redux'
 import * as transactionsActions from '../actions'
 
 
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //botoes icones
 import {faPlusSquare} from '@fortawesome/free-solid-svg-icons'
 import Transaction from './Transaction';
-//import { AST_False } from 'terser';
 
-
+import Cleave from 'cleave.js/react';
 
 
 class Transactions extends Component{
@@ -28,10 +25,10 @@ class Transactions extends Component{
             isAddTransaction:false,
             transactionData:{
                 userDest:'',
-                operation:1,
                 value:0,
-                valueCard:undefined,
-                card:undefined
+                valueCard:0,
+                card:'',
+                password:''
             }
         }
     }
@@ -43,6 +40,7 @@ class Transactions extends Component{
         3 - transferencia somente cartao
     */
 
+    
     componentDidMount(){
         this.props.getContacts(this.props.token);
         this.props.getCards(this.props.token);
@@ -56,49 +54,20 @@ class Transactions extends Component{
     }
 
 
-    validFields = () =>{
-        if(this.state.transactionData.idUserDest === ''){
-            alert("O Usuario deve ser preenchido")    
-            return false
-        }else if(this.state.transactionData.value === ''){
-            alert("O Valor deve ser Preenchido")    
-            return false
-        }else if((this.props.userValueAccount < this.state.transactionData.value) && this.state.transactionData.idcard === ""){
-            alert("O Valor da tranferencia excede a Conta, Selecionar um Cartão")    
-            return false
-        }
-
-        return true
-    }
-
     createTransaction= async ()=>{
-        if(this.validFields()){
-            const tmpdata = this.state.transactionData;
-            /*
-            var varcard;
-            var valuedesc;
-            
-            if((parseFloat(this.props.userValueAccount) - parseFloat(tmpdata.value)) >= 0 ){
-                varcard = 0
-                valuedesc = parseFloat(tmpdata.value)
-            }else{
-                varcard = parseFloat(tmpdata.value) - parseFloat(this.props.userValueAccount)
-                valuedesc = parseFloat(this.props.userValueAccount)
-            }
-            
-            
-            tmpdata.valueCard = varcard;
-            */
-
-            //await this.props.createTransaction(this.props.token, tmpdata)
-            console.log(tmpdata)
-            await this.props.createTransaction(this.props.token, tmpdata)
-
-           // await this.props.tranferValue(tmpdata.idUserOrig,tmpdata.idUserDest,tmpdata.value,valuedesc)
-           // await this.setState({
-           //     isAddTransaction: false
-           // })
+        let operation
+        if(this.state.transactionData.value > 0 && this.state.transactionData.card > ""){
+            operation = 2
+        }else if(this.state.transactionData.value > 0){
+            operation = 1
+        }else if(this.state.transactionData.card > ""){
+            operation = 3
+        }else{
+            operation = 0
         }
+
+        const tmpdata = this.state.transactionData;
+        await this.props.createTransaction(this.props.token, {...tmpdata, operation} )
     }
 
     addItens=()=>{
@@ -107,9 +76,8 @@ class Transactions extends Component{
         })
     }
 
-
-
     inputOnChange = (value, name) =>{
+    
         this.setState({
             transactionData: {
                 ...this.state.transactionData,
@@ -122,6 +90,13 @@ class Transactions extends Component{
     
     render(){
 
+        const valueCard = this.state.transactionData.valueCard > "" ? parseFloat(this.state.transactionData.valueCard) : 0 
+        const value = this.state.transactionData.value > "" ? parseFloat(this.state.transactionData.value) : 0 
+
+        const isPassword = ((valueCard + value) > 1000)
+
+        console.log(this.state.transactionData)
+
         return (
     
             <div className="component box e">
@@ -132,14 +107,14 @@ class Transactions extends Component{
                 
                 {this.state.isAddTransaction && 
 
-                     <div className="addItemComponent">
+                    <div className="addItemComponent componentScrolling">
                         
                         <div className = "groupInput" >
                             <label className = "labelInput">Enviar Para:</label>
                             <select name = 'userDest' value = {this.state.transactionData.userDest} className="inputForm" onChange={e => this.inputOnChange(e.target.value, e.target.name)}>
-                                    <option   value=''></option>
+                                <option value=''></option>
                                 {
-                                this.props.contacts.map((contact, index) => <option key={index}  value={contact.idUserContact}> {contact.firstName} - Conta:{contact.account}</option>) 
+                                    this.props.contacts.map((contact, index) => <option key={index}  value={contact.idUserContact}> {contact.firstName} - Conta:{contact.account}</option>) 
                                 }
                             </select>
                         </div>
@@ -147,7 +122,7 @@ class Transactions extends Component{
 
                         <div className = "groupInput" >
                             <label  className = "labelInput">Valor Transação</label>
-                            <input name = 'value' value = {this.state.transactionData.value} type="number"  className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
+                            <Cleave name = 'value' className = "inputForm" value = {this.state.transactionData.value}  options={{numeral: true, numeralIntegerScale: 5, numeralDecimalScale: 2, numeralDecimalMark: ',', delimiter: '.',  prefix: 'R$ ',rawValueTrimPrefix: true}}   onChange={e => this.inputOnChange(e.target.rawValue, e.target.name)}/>
                         </div>
 
                         <div className = "groupInput" >
@@ -167,12 +142,19 @@ class Transactions extends Component{
                                 }
                             </select>
                         </div>
+                        {this.state.transactionData.card > '' &&
+                            <div className = "groupInput" >
+                                <label  className = "labelInput">Valor Cartão</label>
+                                <Cleave name = 'valueCard' className = "inputForm" value = {this.state.transactionData.valueCard}  options={{numeral: true, numeralIntegerScale: 5, numeralDecimalScale: 2, numeralDecimalMark: ',', delimiter: '.',  prefix: 'R$ ', rawValueTrimPrefix: true}}   onChange={e => this.inputOnChange(e.target.rawValue, e.target.name)}/>
+                            </div>
+                        }
 
-                        <div className = "groupInput" >
-                            <label  className = "labelInput">Valor Transação</label>
-                            <input name = 'valueCard' value = {this.state.transactionData.valueCard} type="number"  className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
-                        </div>
-
+                        {isPassword &&
+                            <div className = "groupInput" >
+                                <label  className = "labelInput">Senha</label>
+                                <input name = 'password' value = {this.state.transactionData.password} type="password"  className="inputForm"  onChange={e => this.inputOnChange(e.target.value, e.target.name)}/>
+                            </div>
+                        }
 
 
                         <div className = "groupButton">
@@ -184,12 +166,13 @@ class Transactions extends Component{
                     </div>
                 }
 
-                
-                <div className="corpComponent componentScrolling corpComponentTransactions">
-                        {
-                           this.props.transactions.map((transaction, index) => <Transaction  key={index} data={transaction} />) 
-                        }
-                </div>
+                {!this.state.isAddTransaction &&
+                    <div className="corpComponent componentScrolling corpComponentTransactions">
+                            {
+                            this.props.transactions.map((transaction, index) => <Transaction  key={index} data={transaction} />) 
+                            }
+                    </div>
+                }
                 
 
             </div>
@@ -199,12 +182,8 @@ class Transactions extends Component{
 }
 
 
-//export default Contacts
-
 const mapStateToProps = state => ({
-    userId: state.user.id,
     token: state.user.token,
-    userValueAccount: state.user.valueAccount,
     contacts: state.contacts,
     cards: state.cards,
     transactions: state.transactions
@@ -216,34 +195,3 @@ export default connect(mapStateToProps, mapDispatchToProps)(Transactions);
 
 
 
-
-
-
-
-/*
-
-    createTransaction= async ()=>{
-        if(this.validFields()){
-            const tmpdata = this.state.transactionData;
-            tmpdata.date = new Date();
-            
-            var varcard;
-            var valuedesc;
-            if((parseFloat(this.props.userValueAccount) - parseFloat(tmpdata.value)) >= 0 ){
-                varcard = 0
-                valuedesc = parseFloat(tmpdata.value)
-            }else{
-                varcard = parseFloat(tmpdata.value) - parseFloat(this.props.userValueAccount)
-                valuedesc = parseFloat(this.props.userValueAccount)
-            }
-
-            tmpdata.valuecard = varcard;
-            
-            await this.props.createTransaction(this.props.userId, tmpdata)
-            await this.props.tranferValue(tmpdata.idUserOrig,tmpdata.idUserDest,tmpdata.value,valuedesc)
-            await this.setState({
-                isAddTransaction: false
-            })
-        }
-    }
-*/

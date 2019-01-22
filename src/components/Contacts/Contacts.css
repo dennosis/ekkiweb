@@ -2,7 +2,7 @@
     border-style: none;
     border-width: 2px;
     border-radius: 15px;
-    border-color: rgba(200, 200, 210, 1);
+    border-color: var(--comp-color-lvl-3);
     padding:10px;
     grid-gap: 10px;
     display: grid;
@@ -15,13 +15,13 @@
     grid-column: 1;
     grid-row: 1;
     border-bottom: 1px solid;
-    border-color: rgba(200, 200, 210, 1);
+    border-color: var(--comp-color-lvl-3);
     display: flex;
     align-items: flex-end;
     padding:5px;
  
     font-size:20px!important;
-    color: rgba(200, 200, 210, 1);
+    color: var(--comp-color-lvl-3);
     
     font-family: Arial;
     display:grid;
@@ -53,7 +53,7 @@
 .corpComponent{
     grid-column: 1;
     grid-row: 3;
-    color: rgba(200, 200, 210, 1);
+    color: var(--comp-color-lvl-3);
     font-size:15px!important;
     text-align: justify;
     font-family: Arial;
@@ -62,18 +62,18 @@
     grid-gap: 10px;
   
     grid-auto-rows: min-content;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 1fr;
     /*height: 300px;*/
 }
 
 
 
 .addItemButton {
-  background: rgba(105,105,105,.8);
+  background: var(--comp-color-lvl-2);
   border: none;
   border-width:2px;
   
-  color: rgba(200, 200, 210, 1);
+  color: var(--comp-color-lvl-3);
   justify-self: end;
   text-align: center;
   text-decoration: none;
@@ -117,7 +117,7 @@
     padding-left:10px;
     display: inherit;
   
-    background: rgba(200, 200, 210, 1);
+    background: var(--comp-color-lvl-3);
   
   
     /*color: rgba(105,105,105,1);*/
@@ -128,13 +128,13 @@
 
 
 .btnSearch:hover{
-    background: rgba(200, 200, 210, .5);
+    background: var(--comp-color-lvl-1);
 }
 
 .groupInputSearch{
 
     border: solid 2px ;
-    border-color: rgba(200, 200, 210, 1);  
+    border-color: var(--comp-color-lvl-3);  
     outline:none;
     border-radius: 5px;
 

@@ -31,7 +31,7 @@ class Card extends Component{
 
         //imgLogo  = require("./img/"+this.props.data.codCard+".png");
 
-        if(this.props.data.type === '1'){
+        if(parseFloat(this.props.data.type) === 1){
             typeDesc = 'Crédito';
         }else{
             typeDesc = 'Débito';
@@ -65,7 +65,7 @@ class Card extends Component{
                 <FontAwesomeIcon icon={cardcreditico} size="3x"/>
      
                 <div className="card-corp">
-                    <span className="card-number txtScrolling">{this.props.data.number}</span> 
+                    <span className="card-number txtScrolling">{String(this.props.data.number).replace(/(.)(?=(\d{4})+$)/g,'$1-')}</span> 
                     <span className="card-tp txtScrolling">{typeDesc}</span> 
                     <div className = 'groupButtonCard'>
                         <FontAwesomeIcon onClick= {this.editCard} icon={faPencilAlt} size="1x"/>

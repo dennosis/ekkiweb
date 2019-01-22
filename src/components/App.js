@@ -22,7 +22,7 @@ import {faMoneyBillAlt, faUsers, faCreditCard, faSignOutAlt, faUser} from '@fort
 
 import {bindActionCreators} from 'redux'
 import  {connect}  from 'react-redux'
-import * as userActions from './actions/user'
+import * as actions from './actions'
 
 
 class App extends Component {
@@ -39,6 +39,11 @@ logout = ()=>{
 }
 
   render() {
+
+
+
+    const valueAccount = this.props.user.valueAccount > "" ? parseFloat(this.props.user.valueAccount) : 0 
+
 
     return (  
       <Router>
@@ -61,13 +66,13 @@ logout = ()=>{
                 <NavLink  exact to="/user" className="menu-item imgContainer" activeClassName = "menu-item-active">
                 
                   {this.props.user.img > '' && <img alt = "" src={this.props.user.img}/> }
-                  {this.props.user.img === '' &&  <FontAwesomeIcon icon={faUser} size="2x"/>}
+                  {(this.props.user.img === '' || this.props.user.img === undefined) &&  <FontAwesomeIcon icon={faUser} size="1x"/>}
                 </NavLink>
                 
             </div>
             <div className="box b">
                 <span className="txtinfo  txtScrolling">{this.props.user.firstName + ' '+this.props.user.lastName }</span>
-                <span className="txtsubinfo txtScrolling">R$ {this.props.user.valueAccount}</span>
+                <span className="txtsubinfo txtScrolling">R$ {valueAccount.toLocaleString(undefined,{ minimumFractionDigits: 2 })}</span>
             
             </div>
             <div className="box c">
@@ -125,7 +130,7 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(userActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 

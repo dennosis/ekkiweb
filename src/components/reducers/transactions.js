@@ -30,7 +30,12 @@ export default function transactions(state = [], action) {
         case 'GET_TRANSACTIONS':
             return action.transactions;
     
-        
+        case 'FAILURE_LOAD_TRANSACTIONS':
+            alert(action.error);
+            return state;
+
+ 
+
       default:
         return state;
     }

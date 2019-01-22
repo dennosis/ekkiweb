@@ -22,8 +22,23 @@ export default function contacts(state = [], action) {
             return item
         })
         return [...contactadd]
+       
+      case 'FAILURE_LOAD_CONTACTS':
+        alert(action.error);
+        return state;
+      
+      case 'FAILURE_DELETE_CONTACT':
+        alert(action.error);
+        return state;
 
-        
+      case 'FAILURE_FIND_CONTACTS':
+        alert(action.error);
+        return state;
+      
+      case 'FAILURE_ADD_CONTACT':
+        alert(action.error);
+        return state;
+
       default:
         return state;
     }

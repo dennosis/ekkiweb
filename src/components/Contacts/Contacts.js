@@ -52,9 +52,6 @@ class Contacts extends Component{
         const cantact = {contact:idContact}
         this.props.addContact(this.props.token, cantact);
 
-        //const cantact = {idUser:idContact, idUserOrig: this.props.userId }
-        //await this.props.addContact(this.props.userId, cantact);
-        //console.log(idContatct)
     }
 
 
@@ -65,7 +62,6 @@ class Contacts extends Component{
                 [name]: value
             }
         });
-        //console.log(this.state)
     }
 
 
@@ -119,7 +115,7 @@ class Contacts extends Component{
 }
 
 
-//export default Contacts
+
 
 const mapStateToProps = state => ({
     token: state.user.token,

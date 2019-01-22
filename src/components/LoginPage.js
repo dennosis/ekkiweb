@@ -6,8 +6,6 @@ import {bindActionCreators} from 'redux'
 import  {connect}  from 'react-redux'
 import * as userActions from './actions/user'
 
-
-
 import {
 
     Redirect 
